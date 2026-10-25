@@ -49,7 +49,7 @@ window.PRODUCTS = [
   {"code":"6626L","name":"Style 6626L","category":"Footwear","sizes":"6–11","pairsPerCarton":"20 pairs","image":"assets/products/pdf03-page03.jpg","source":"PDF 3, page 3"},
   {"code":"6640L","name":"Style 6640L","category":"Footwear","sizes":"6–11","pairsPerCarton":"20 pairs","image":"assets/products/pdf03-page04.jpg","source":"PDF 3, page 4"},
   {"code":"090","name":"Style 090","category":"Footwear","sizes":"10–2, 3–8, 6–11","pairsPerCarton":"20 pairs","image":"assets/products/pdf03-page05.jpg","source":"PDF 3, page 5"},
-  {"code":"CHECK-CODE-03-06","name":"Stock code needs verification","category":"Footwear","sizes":"","pairsPerCarton":"","image":"assets/products/pdf03-page06.jpg","source":"PDF 3, page 6"},
+  {"code":"186s","name":"Style 186s","category":"Footwear","sizes":"10–2","pairsPerCarton":"36 pairs","image":"assets/products/pdf03-page06.jpg","source":"PDF 3, page 6"},
   {"code":"CHECK-CODE-03-07","name":"Stock code needs verification","category":"Footwear","sizes":"","pairsPerCarton":"","image":"assets/products/pdf03-page07.jpg","source":"PDF 3, page 7"},
   {"code":"6610","name":"Style 6610","category":"Footwear","sizes":"3–8","pairsPerCarton":"20 pairs","image":"assets/products/pdf03-page08.jpg","source":"PDF 3, page 8"},
   {"code":"6611","name":"Style 6611","category":"Footwear","sizes":"6–11","pairsPerCarton":"20 pairs","image":"assets/products/pdf03-page09.jpg","source":"PDF 3, page 9"},
