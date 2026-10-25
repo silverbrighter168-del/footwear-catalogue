@@ -1,8 +1,6 @@
-
 /* Mai Footwear catalogue.
-   Duplicate stock-code records removed.
-   First occurrence retained for each stock code.
-   CHECK-CODE records still need manual verification. */
+   Confirmed stock codes and carton quantities updated.
+   Duplicate stock-code records were checked. */
 
 window.PRODUCTS = [
   {"code":"6671L","name":"Style 6671L","category":"Footwear","sizes":"6–11","pairsPerCarton":"20 pairs","image":"assets/products/pdf01-page01.jpg","source":"PDF 1, page 1"},
@@ -50,7 +48,7 @@ window.PRODUCTS = [
   {"code":"6640L","name":"Style 6640L","category":"Footwear","sizes":"6–11","pairsPerCarton":"20 pairs","image":"assets/products/pdf03-page04.jpg","source":"PDF 3, page 4"},
   {"code":"090","name":"Style 090","category":"Footwear","sizes":"10–2, 3–8, 6–11","pairsPerCarton":"20 pairs","image":"assets/products/pdf03-page05.jpg","source":"PDF 3, page 5"},
   {"code":"186s","name":"Style 186s","category":"Footwear","sizes":"10–2","pairsPerCarton":"36 pairs","image":"assets/products/pdf03-page06.jpg","source":"PDF 3, page 6"},
-  {"code":"CHECK-CODE-03-07","name":"Stock code needs verification","category":"Footwear","sizes":"","pairsPerCarton":"","image":"assets/products/pdf03-page07.jpg","source":"PDF 3, page 7"},
+  {"code":"138m/L","name":"Style 138m/L","category":"Footwear","sizes":"3–8, 6–11","pairsPerCarton":"36 pairs","image":"assets/products/pdf03-page07.jpg","source":"PDF 3, page 7"},
   {"code":"6610","name":"Style 6610","category":"Footwear","sizes":"3–8","pairsPerCarton":"20 pairs","image":"assets/products/pdf03-page08.jpg","source":"PDF 3, page 8"},
   {"code":"6611","name":"Style 6611","category":"Footwear","sizes":"6–11","pairsPerCarton":"20 pairs","image":"assets/products/pdf03-page09.jpg","source":"PDF 3, page 9"},
   {"code":"6669m","name":"Style 6669m","category":"Footwear","sizes":"3–8","pairsPerCarton":"20 pairs","image":"assets/products/pdf03-page10.jpg","source":"PDF 3, page 10"},
@@ -137,7 +135,7 @@ window.PRODUCTS = [
   {"code":"128L","name":"Style 128L","category":"Footwear","sizes":"6–11","pairsPerCarton":"36 pairs","image":"assets/products/pdf08-page14.jpg","source":"PDF 8, page 14"},
   {"code":"130m/L","name":"Style 130m/L","category":"Footwear","sizes":"3–8, 6–11","pairsPerCarton":"36 pairs","image":"assets/products/pdf08-page15.jpg","source":"PDF 8, page 15"},
   {"code":"137m/L","name":"Style 137m/L","category":"Footwear","sizes":"3–8, 6–11","pairsPerCarton":"36 pairs","image":"assets/products/pdf08-page16.jpg","source":"PDF 8, page 16"},
-  {"code":"CHECK-CODE-08-17","name":"Stock code needs verification","category":"Footwear","sizes":"","pairsPerCarton":"","image":"assets/products/pdf08-page17.jpg","source":"PDF 8, page 17"},
+  {"code":"168m/L","name":"Style 168m/L","category":"Footwear","sizes":"3–8, 6–11","pairsPerCarton":"36 pairs","image":"assets/products/pdf08-page17.jpg","source":"PDF 8, page 17"},
   {"code":"169m/L","name":"Style 169m/L","category":"Footwear","sizes":"3–8, 6–11","pairsPerCarton":"36 pairs","image":"assets/products/pdf08-page18.jpg","source":"PDF 8, page 18"},
   {"code":"170m","name":"Style 170m","category":"Footwear","sizes":"3–8","pairsPerCarton":"36 pairs","image":"assets/products/pdf08-page19.jpg","source":"PDF 8, page 19"},
   {"code":"209","name":"Style 209","category":"Footwear","sizes":"6–11","pairsPerCarton":"20 pairs","image":"assets/products/pdf08-page20.jpg","source":"PDF 8, page 20"},
@@ -159,19 +157,19 @@ window.PRODUCTS = [
   {"code":"6652m","name":"Style 6652m","category":"Footwear","sizes":"3–8","pairsPerCarton":"20 pairs","image":"assets/products/pdf09-page16.jpg","source":"PDF 9, page 16"},
   {"code":"6650m","name":"Style 6650m","category":"Footwear","sizes":"3–8","pairsPerCarton":"20 pairs","image":"assets/products/pdf09-page17.jpg","source":"PDF 9, page 17"},
   {"code":"6638s/m","name":"Style 6638s/m","category":"Footwear","sizes":"10–2, 3–8","pairsPerCarton":"20 pairs","image":"assets/products/pdf09-page18.jpg","source":"PDF 9, page 18"},
-  {"code":"PHOTO-01","name":"Uploaded shoe photo 1","category":"Footwear","sizes":"","pairsPerCarton":"","image":"assets/products/uploaded-photo-01.jpg","source":"Uploaded JPG"},
-  {"code":"PHOTO-02","name":"Uploaded shoe photo 2","category":"Footwear","sizes":"","pairsPerCarton":"","image":"assets/products/uploaded-photo-02.jpg","source":"Uploaded JPG"},
-  {"code":"PHOTO-03","name":"Uploaded shoe photo 3","category":"Footwear","sizes":"","pairsPerCarton":"","image":"assets/products/uploaded-photo-03.jpg","source":"Uploaded JPG"},
-  {"code":"PHOTO-04","name":"Uploaded shoe photo 4","category":"Footwear","sizes":"","pairsPerCarton":"","image":"assets/products/uploaded-photo-04.jpg","source":"Uploaded JPG"},
-  {"code":"PHOTO-05","name":"Uploaded shoe photo 5","category":"Footwear","sizes":"","pairsPerCarton":"","image":"assets/products/uploaded-photo-05.jpg","source":"Uploaded JPG"},
-  {"code":"PHOTO-06","name":"Uploaded shoe photo 6","category":"Footwear","sizes":"","pairsPerCarton":"","image":"assets/products/uploaded-photo-06.jpg","source":"Uploaded JPG"},
-  {"code":"PHOTO-07","name":"Uploaded shoe photo 7","category":"Footwear","sizes":"","pairsPerCarton":"","image":"assets/products/uploaded-photo-07.jpg","source":"Uploaded JPG"},
-  {"code":"PHOTO-08","name":"Uploaded shoe photo 8","category":"Footwear","sizes":"","pairsPerCarton":"","image":"assets/products/uploaded-photo-08.jpg","source":"Uploaded JPG"},
-  {"code":"PHOTO-09","name":"Uploaded shoe photo 9","category":"Footwear","sizes":"","pairsPerCarton":"","image":"assets/products/uploaded-photo-09.jpg","source":"Uploaded JPG"}
+  {"code":"6642L","name":"Style 6642L","category":"Footwear","sizes":"6–11","pairsPerCarton":"20 pairs","image":"assets/products/uploaded-photo-01.jpg","source":"Uploaded JPG"},
+  {"code":"235","name":"Style 235","category":"Footwear","sizes":"6–11","pairsPerCarton":"20 pairs","image":"assets/products/uploaded-photo-02.jpg","source":"Uploaded JPG"},
+  {"code":"233","name":"Style 233","category":"Footwear","sizes":"6–11","pairsPerCarton":"20 pairs","image":"assets/products/uploaded-photo-03.jpg","source":"Uploaded JPG"},
+  {"code":"250","name":"Style 250","category":"Footwear","sizes":"3–8","pairsPerCarton":"20 pairs","image":"assets/products/uploaded-photo-04.jpg","source":"Uploaded JPG"},
+  {"code":"251","name":"Style 251","category":"Footwear","sizes":"6–11","pairsPerCarton":"20 pairs","image":"assets/products/uploaded-photo-05.jpg","source":"Uploaded JPG"},
+  {"code":"237","name":"Style 237","category":"Footwear","sizes":"6–11","pairsPerCarton":"20 pairs","image":"assets/products/uploaded-photo-06.jpg","source":"Uploaded JPG"},
+  {"code":"238","name":"Style 238","category":"Footwear","sizes":"10–2","pairsPerCarton":"20 pairs","image":"assets/products/uploaded-photo-07.jpg","source":"Uploaded JPG"},
+  {"code":"239","name":"Style 239","category":"Footwear","sizes":"3–8","pairsPerCarton":"20 pairs","image":"assets/products/uploaded-photo-08.jpg","source":"Uploaded JPG"},
+  {"code":"236","name":"Style 236","category":"Footwear","sizes":"3–8","pairsPerCarton":"20 pairs","image":"assets/products/uploaded-photo-09.jpg","source":"Uploaded JPG"}
 ];
 
 window.SITE_CONFIG = {
   businessName: 'Mai Footwear',
-  whatsappNumber: '',
+  whatsappNumber: '27822990061',
   introMessage: 'Hello, I am interested in these shoe styles:'
 };
