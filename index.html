@@ -1,21 +1,156 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Browse our wholesale shoe and slipper catalogue. Contact us to enquire about styles and orders.">
-  <title>Mai Footwear | Wholesale Catalogue</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <meta name="description" content="Explore Run Fast Sandals' wholesale footwear catalogue. Browse sandal and slipper styles by code, check available sizes and carton quantities, and contact us for wholesale enquiries.">
+
+  <meta name="theme-color" content="#ffffff">
+
+  <title>Run Fast Sandals | Wholesale Footwear Catalogue</title>
+
   <link rel="stylesheet" href="styles.css">
 </head>
+
 <body>
-  <header class="topbar"><a class="brand" href="#top"><span class="brand-mark">M</span><span><b>MAI FOOTWEAR</b><small>WHOLESALE CATALOGUE</small></span></a><a class="top-contact" id="headerContact" href="#contact">Contact to order <span>↗</span></a></header>
+  <header class="topbar">
+    <a class="brand" href="#top" aria-label="Run Fast Sandals home">
+      <span class="brand-mark">R</span>
+      <span>
+        <b>RUN FAST SANDALS</b>
+        <small>WHOLESALE CATALOGUE</small>
+      </span>
+    </a>
+
+    <a class="top-contact" id="headerContact" href="#contact">
+      Contact to order <span>↗</span>
+    </a>
+  </header>
+
   <main id="top">
-    <section class="hero"><div class="hero-copy"><p class="eyebrow">MADE FOR EVERYDAY COMFORT</p><h1>Find your<br><em>next best-seller.</em></h1><p class="hero-text">Explore our footwear collection by style code. Found something you like? Contact us directly to discuss wholesale orders.</p><a class="primary-button" href="#catalogue">Explore catalogue <span>↓</span></a><div class="hero-note"><span class="dot"></span> Wholesale enquiries welcome</div></div><div class="hero-art"><div class="art-circle"></div><div class="art-label">FOOTWEAR<br>COLLECTION</div><div class="art-shoe">MAI<br><span>FOOTWEAR</span></div><div class="art-number">01 / COLLECTION</div></div></section>
-    <section class="catalogue" id="catalogue"><div class="section-head"><div><p class="eyebrow">THE COLLECTION</p><h2>Browse our styles</h2></div><p class="section-description">Search by style code or narrow the collection to find what you need.</p></div>
-      <div class="controls"><label class="searchbox"><span>⌕</span><input id="search" type="search" placeholder="Search style code or name…" aria-label="Search styles"></label><select id="category" aria-label="Filter by category"><option value="all">All footwear</option><option value="Sandals">Sandals</option><option value="Slippers">Slippers</option><option value="Other">Other</option></select><select id="sort" aria-label="Sort styles"><option value="code">Sort: Style code</option><option value="name">Sort: Name</option></select></div>
-      <p class="result-count" id="resultCount">Catalogue preview</p><div class="product-grid" id="products"></div><div class="empty-state" id="empty" hidden><h3>No styles found</h3><p>Try another search or clear your filters.</p></div>
+
+    <section class="hero">
+      <div class="hero-copy">
+        <p class="eyebrow">MADE FOR EVERYDAY COMFORT</p>
+
+        <h1>
+          Find your<br>
+          <em>next best-seller.</em>
+        </h1>
+
+        <p class="hero-text">
+          Explore the Run Fast Sandals footwear collection by style code.
+          Found something you like? Contact us directly to discuss wholesale orders.
+        </p>
+
+        <a class="primary-button" href="#catalogue">
+          Explore catalogue <span>↓</span>
+        </a>
+
+        <div class="hero-note">
+          <span class="dot"></span>
+          Wholesale enquiries welcome
+        </div>
+      </div>
+
+      <div class="hero-art">
+        <div class="art-circle"></div>
+        <div class="art-label">FOOTWEAR<br>COLLECTION</div>
+        <div class="art-shoe">
+          RUN FAST<br>
+          <span>SANDALS</span>
+        </div>
+        <div class="art-number">01 / COLLECTION</div>
+      </div>
     </section>
-    <section class="contact" id="contact"><div><p class="eyebrow">READY TO ORDER?</p><h2>Let's talk footwear.</h2><p>Send us the style codes you're interested in and we'll help with your wholesale enquiry.</p></div><a class="primary-button contact-button" id="whatsappButton" href="#" target="_blank" rel="noopener">Enquire on WhatsApp <span>↗</span></a></section>
+
+    <section class="catalogue" id="catalogue">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">THE COLLECTION</p>
+          <h2>Browse our styles</h2>
+        </div>
+
+        <p class="section-description">
+          Search by style code or narrow the collection to find what you need.
+        </p>
+      </div>
+
+      <div class="controls">
+        <label class="searchbox">
+          <span>⌕</span>
+          <input
+            id="search"
+            type="search"
+            placeholder="Search style code or name…"
+            aria-label="Search styles"
+          >
+        </label>
+
+        <select id="category" aria-label="Filter by category">
+          <option value="all">All footwear</option>
+          <option value="Sandals">Sandals</option>
+          <option value="Slippers">Slippers</option>
+          <option value="Other">Other</option>
+        </select>
+
+        <select id="sort" aria-label="Sort styles">
+          <option value="code">Sort: Style code</option>
+          <option value="name">Sort: Name</option>
+        </select>
+      </div>
+
+      <p class="result-count" id="resultCount">Catalogue preview</p>
+
+      <div class="product-grid" id="products"></div>
+
+      <div class="empty-state" id="empty" hidden>
+        <h3>No styles found</h3>
+        <p>Try another search or clear your filters.</p>
+      </div>
+    </section>
+
+    <section class="contact" id="contact">
+      <div>
+        <p class="eyebrow">READY TO ORDER?</p>
+        <h2>Let's talk footwear.</h2>
+        <p>
+          Send us the style codes you're interested in and we'll help
+          with your wholesale enquiry.
+        </p>
+      </div>
+
+      <a
+        class="primary-button contact-button"
+        id="whatsappButton"
+        href="#"
+        target="_blank"
+        rel="noopener"
+      >
+        Enquire on WhatsApp <span>↗</span>
+      </a>
+    </section>
+
   </main>
-  <footer><a class="brand footer-brand" href="#top"><span class="brand-mark">M</span><span><b>MAI FOOTWEAR</b><small>WHOLESALE CATALOGUE</small></span></a><p>© <span id="year"></span> Mai Footwear. All rights reserved.</p><a href="#top">Back to top ↑</a></footer>
-  <script src="products.js"></script><script src="app.js"></script>
-</body></html>
+
+  <footer>
+    <a class="brand footer-brand" href="#top" aria-label="Run Fast Sandals home">
+      <span class="brand-mark">R</span>
+      <span>
+        <b>RUN FAST SANDALS</b>
+        <small>WHOLESALE CATALOGUE</small>
+      </span>
+    </a>
+
+    <p>
+      © <span id="year"></span> Run Fast Sandals. All rights reserved.
+    </p>
+
+    <a href="#top">Back to top ↑</a>
+  </footer>
+
+  <script src="products.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
