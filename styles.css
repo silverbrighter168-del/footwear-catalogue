@@ -710,3 +710,81 @@ footer > a:last-child {
     width: 135px;
   }
 }
+
+/* Header actions: language selector and contact button */
+.header-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 14px;
+  flex-shrink: 0;
+}
+
+.language-control {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.language-control select {
+  max-width: 125px;
+  min-width: 0;
+  padding: 9px 10px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #fff;
+  color: var(--ink);
+  font: inherit;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+/* Keep the language selector usable on mobile */
+@media (max-width: 650px) {
+  .topbar {
+    gap: 8px;
+  }
+
+  .header-actions {
+    gap: 8px;
+  }
+
+  .language-control {
+    gap: 0;
+  }
+
+  .language-label {
+    display: none;
+  }
+
+  .language-control select {
+    width: 88px;
+    padding: 9px 4px;
+    font-size: 11px;
+  }
+
+  .top-contact {
+    font-size: 10px;
+  }
+}
+
+@media (max-width: 360px) {
+  .brand-logo {
+    width: 105px;
+  }
+
+  .header-actions {
+    gap: 5px;
+  }
+
+  .language-control select {
+    width: 78px;
+    padding: 8px 2px;
+  }
+
+  .top-contact {
+    font-size: 9px;
+  }
+}
