@@ -168,7 +168,7 @@ window.PRODUCTS = [
 ];
 
 window.SITE_CONFIG = {
-  businessName: 'Mai Footwear',
+  businessName: 'Run Fast Sandals',
   whatsappNumber: '27822990061',
   introMessage: 'Hello, I am interested in these shoe styles:'
 };
