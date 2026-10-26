@@ -99,7 +99,22 @@ const translations = {
   }
 };
 
-let currentLanguage = localStorage.getItem('runFirstLanguage') || 'en';
+/* Direct links can override the saved browser language:
+   ?lang=zh = Chinese
+   ?lang=en = English
+   No language parameter = saved choice, or English by default. */
+const urlParams = new URLSearchParams(window.location.search);
+const requestedLanguage = urlParams.get('lang');
+
+let currentLanguage;
+
+if (requestedLanguage === 'zh') {
+  currentLanguage = 'zh';
+} else if (requestedLanguage === 'en') {
+  currentLanguage = 'en';
+} else {
+  currentLanguage = localStorage.getItem('runFirstLanguage') || 'en';
+}
 
 if (!translations[currentLanguage]) {
   currentLanguage = 'en';
@@ -120,11 +135,12 @@ function applyLanguage() {
   const tr = translations[currentLanguage];
 
   document.documentElement.lang = currentLanguage === 'zh' ? 'zh-CN' : 'en';
-
   document.title = tr.pageTitle;
 
   const description = document.querySelector('meta[name="description"]');
-  if (description) description.content = tr.description;
+  if (description) {
+    description.content = tr.description;
+  }
 
   const setText = (selector, value) => {
     const element = document.querySelector(selector);
@@ -136,12 +152,21 @@ function applyLanguage() {
 
   const heroHeading = document.querySelector('.hero-copy h1');
   if (heroHeading) {
-    heroHeading.innerHTML = `${escapeHtml(tr.heroLine1)}<br><em>${escapeHtml(tr.heroLine2)}</em>`;
+    heroHeading.innerHTML =
+      `${escapeHtml(tr.heroLine1)}<br><em>${escapeHtml(tr.heroLine2)}</em>`;
   }
 
   setText('.hero-text', tr.heroText);
-  setText('.primary-button[href="#catalogue"]', tr.explore + ' ↓');
-  setText('.hero-note', '● ' + tr.wholesale);
+
+  const exploreButton = document.querySelector('.primary-button[href="#catalogue"]');
+  if (exploreButton) {
+    exploreButton.innerHTML = `${escapeHtml(tr.explore)} <span>↓</span>`;
+  }
+
+  const heroNote = document.querySelector('.hero-note');
+  if (heroNote) {
+    heroNote.innerHTML = `<span class="dot"></span>${escapeHtml(tr.wholesale)}`;
+  }
 
   setText('.section-head .eyebrow', tr.collection);
   setText('.section-head h2', tr.browse);
@@ -164,31 +189,34 @@ function applyLanguage() {
   setText('.contact .eyebrow', tr.ready);
   setText('.contact h2', tr.talk);
   setText('.contact div > p:not(.eyebrow)', tr.contactText);
-  setText('#whatsappButton', tr.whatsapp + ' ↗');
+
+  const whatsappButton = document.getElementById('whatsappButton');
+  if (whatsappButton) {
+    whatsappButton.innerHTML = `${escapeHtml(tr.whatsapp)} <span>↗</span>`;
+    whatsappButton.href = makeWhatsAppLink(tr.introMessage);
+  }
 
   const footerParagraph = document.querySelector('footer p');
   if (footerParagraph) {
     footerParagraph.innerHTML =
-      '© <span id="year">' + new Date().getFullYear() +
-      '</span> Run First Sandals. ' + escapeHtml(tr.rights);
+      `© <span id="year">${new Date().getFullYear()}</span> Run First Sandals. ${escapeHtml(tr.rights)}`;
   }
 
   const backLink = document.querySelector('footer > a:last-child');
-  if (backLink) backLink.textContent = tr.backToTop + ' ↑';
+  if (backLink) {
+    backLink.textContent = tr.backToTop + ' ↑';
+  }
 
   const selector = document.getElementById('language');
-  if (selector) selector.value = currentLanguage;
+  if (selector) {
+    selector.value = currentLanguage;
+  }
 
   const headerContact = document.getElementById('headerContact');
   if (headerContact) {
     headerContact.href = waNumber
       ? makeWhatsAppLink(tr.whatsappMessage)
       : '#contact';
-  }
-
-  const whatsappButton = document.getElementById('whatsappButton');
-  if (whatsappButton) {
-    whatsappButton.href = makeWhatsAppLink(tr.introMessage);
   }
 
   render();
@@ -262,7 +290,9 @@ const languageSelector = document.getElementById('language');
 if (languageSelector) {
   languageSelector.addEventListener('change', () => {
     currentLanguage = languageSelector.value === 'zh' ? 'zh' : 'en';
+
     localStorage.setItem('runFirstLanguage', currentLanguage);
+
     applyLanguage();
   });
 }
