@@ -1,3 +1,4 @@
+
 (() => {
   'use strict';
 
@@ -848,36 +849,16 @@
       return;
     }
 
-    const totals = cartTotals();
-
+    // Compact WhatsApp order: style code, size, and carton quantity only.
     const lines = [
-      `${BUSINESS_NAME} — ${t('orderTitle')}`,
-      '',
       t('orderMessage'),
-      ''
+      '',
+      ...cart
+        .filter((item) => findProduct(item.code))
+        .map((item) =>
+          `${productCode(findProduct(item.code))} | ${t('size')}: ${item.sizeLabel || item.size} | ${t('cartons')}: ${Number(item.cartons) || 0}`
+        )
     ];
-
-    cart.forEach((item, index) => {
-      const product = findProduct(item.code);
-      if (!product) return;
-
-      const cartons = Number(item.cartons) || 0;
-      const pairsPerCarton = packSize(product);
-      const pairs = cartons * pairsPerCarton;
-
-      lines.push(`${index + 1}. ${productCode(product)}`);
-      lines.push(`   ${t('size')}: ${item.sizeLabel || item.size}`);
-      lines.push(`   ${t('cartons')}: ${cartons}`);
-      lines.push(`   ${t('pairsPerCarton')}: ${pairsPerCarton}`);
-      lines.push(`   ${t('pairs')}: ${pairs}`);
-      lines.push('');
-    });
-
-    lines.push('------------------------');
-    lines.push(`${t('totalCartons')}: ${totals.cartons}`);
-    lines.push(`${t('totalPairs')}: ${totals.pairs}`);
-    lines.push('');
-    lines.push(t('thankYou'));
 
     window.open(
       createWhatsAppURL(lines.join('\n')),
