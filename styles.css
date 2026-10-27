@@ -1569,3 +1569,28 @@ footer > a:last-child {
     min-height: 156px !important;
   }
 }
+
+/* Keep size labels on one line */
+.product-card-content .size-order-row {
+  display: grid !important;
+  grid-template-columns: minmax(0, 1fr) 90px !important;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  flex: 0 0 44px;
+  padding: 8px 10px;
+  box-sizing: border-box;
+}
+
+.product-card-content .size-order-label {
+  white-space: nowrap !important;
+  word-break: normal !important;
+  overflow-wrap: normal !important;
+  font-size: 11px;
+}
+
+.product-card-content .cart-quantity-input {
+  width: 90px !important;
+  min-width: 0 !important;
+  box-sizing: border-box;
+}
