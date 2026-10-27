@@ -1507,3 +1507,65 @@ footer > a:last-child {
   width: 100% !important;
   flex-shrink: 0;
 }
+
+/* Final alignment fix for product cards */
+.product-card {
+  display: flex !important;
+  flex-direction: column !important;
+  height: 100% !important;
+}
+
+.product-card-content {
+  display: flex !important;
+  flex-direction: column !important;
+  flex: 1 1 auto !important;
+  min-height: 0;
+}
+
+.product-card-content .product-code {
+  min-height: 22px;
+}
+
+.product-card-content .product-name {
+  min-height: 18px;
+}
+
+.product-card-content .product-size-info {
+  min-height: 22px;
+}
+
+.product-card-content .product-pack-info {
+  min-height: 22px;
+}
+
+.product-card-content .size-order-inputs {
+  margin-top: 0 !important;
+}
+
+/* Keep every size selector area the same height */
+.product-card-content .size-order-inputs {
+  min-height: 156px !important;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* Keep size rows compact and consistent */
+.product-card-content .size-order-row {
+  flex: 0 0 44px;
+  min-height: 44px;
+  box-sizing: border-box;
+}
+
+/* Push all buttons to the same bottom position */
+.product-card-content .add-cart-button {
+  margin-top: auto !important;
+  flex-shrink: 0;
+  width: 100%;
+}
+
+@media (max-width: 640px) {
+  .product-card-content .size-order-inputs {
+    min-height: 156px !important;
+  }
+}
