@@ -4,17 +4,16 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <meta name="description" content="Explore Run First Sandals' wholesale footwear catalogue. Browse sandal and slipper styles by code, check available sizes and carton quantities, and contact us for wholesale enquiries.">
+  <meta name="description" content="Explore Run First Sandals' wholesale footwear catalogue. Browse styles and send wholesale orders through WhatsApp.">
 
   <meta name="theme-color" content="#ffffff">
-
   <title>Run First Sandals | Wholesale Footwear Catalogue</title>
 
   <link rel="stylesheet" href="styles.css">
 </head>
 
 <body>
-  <header class="topbar">
+  <header class="topbar" id="top">
     <a class="brand" href="#top" aria-label="Run First Sandals home">
       <img
         class="brand-logo"
@@ -33,12 +32,22 @@
       </label>
 
       <a class="top-contact" id="headerContact" href="#contact">
-        Contact to order <span>↗</span>
+        Contact ↗
       </a>
     </div>
   </header>
 
-  <main id="top">
+  <nav class="main-nav" aria-label="Main navigation">
+    <a href="#top" data-nav="home">Home</a>
+    <a href="#catalogue" data-nav="catalogue">Catalogue</a>
+    <a href="#how-to-order" data-nav="how">How to order</a>
+    <a href="#contact" data-nav="contact">Contact</a>
+    <a href="#shopping-cart" class="nav-cart">
+      Cart <span id="navCartCount">0</span>
+    </a>
+  </nav>
+
+  <main>
     <section class="hero">
       <div class="hero-copy">
         <p class="eyebrow">MADE FOR EVERYDAY COMFORT</p>
@@ -50,7 +59,8 @@
 
         <p class="hero-text">
           Explore the Run First Sandals footwear collection by style code.
-          Found something you like? Contact us directly to discuss wholesale orders.
+          Choose your styles, enter carton quantities and send your order
+          directly to us through WhatsApp.
         </p>
 
         <a class="primary-button" href="#catalogue">
@@ -82,7 +92,7 @@
         </div>
 
         <p class="section-description">
-          Search by style code or narrow the collection to find what you need.
+          Search for a style, check its size range and add cartons to your cart.
         </p>
       </div>
 
@@ -110,7 +120,7 @@
         </select>
       </div>
 
-      <p class="result-count" id="resultCount">Catalogue preview</p>
+      <p class="result-count" id="resultCount">Loading catalogue…</p>
 
       <div class="product-grid" id="products"></div>
 
@@ -120,12 +130,93 @@
       </div>
     </section>
 
+    <section class="ordering-guide" id="how-to-order">
+      <p class="eyebrow">SIMPLE ORDERING</p>
+      <h2>How to order</h2>
+
+      <div class="guide-grid">
+        <article>
+          <span>01</span>
+          <h3>Choose your styles</h3>
+          <p>Browse the catalogue and check each style's available size range.</p>
+        </article>
+
+        <article>
+          <span>02</span>
+          <h3>Add cartons</h3>
+          <p>Enter the carton quantity for each style and add it to your cart.</p>
+        </article>
+
+        <article>
+          <span>03</span>
+          <h3>Review your order</h3>
+          <p>Check your selected styles, carton quantities and total pairs.</p>
+        </article>
+
+        <article>
+          <span>04</span>
+          <h3>Send on WhatsApp</h3>
+          <p>Send the complete order to us through WhatsApp for confirmation.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="shopping-cart" id="shopping-cart">
+      <div class="cart-heading">
+        <div>
+          <p class="eyebrow">YOUR ORDER</p>
+          <h2>Shopping cart</h2>
+        </div>
+
+        <span class="cart-badge">
+          <span id="cartCount">0</span> cartons
+        </span>
+      </div>
+
+      <p class="cart-intro">
+        Review your selected styles before sending your order.
+      </p>
+
+      <div id="cartItems" class="cart-items">
+        <div class="cart-empty">
+          Your cart is empty. Browse the catalogue to add styles.
+        </div>
+      </div>
+
+      <div class="cart-summary">
+        <div>
+          <span>Total cartons</span>
+          <strong id="cartTotalCartons">0</strong>
+        </div>
+
+        <div>
+          <span>Total pairs</span>
+          <strong id="cartTotalPairs">0</strong>
+        </div>
+      </div>
+
+      <div class="cart-actions">
+        <button class="secondary-button" id="clearCart" type="button">
+          Clear cart
+        </button>
+
+        <button class="primary-button" id="checkoutButton" type="button">
+          Send order on WhatsApp <span>↗</span>
+        </button>
+      </div>
+
+      <p class="cart-note">
+        Prices are not calculated on this website. We will confirm pricing,
+        availability and delivery with you.
+      </p>
+    </section>
+
     <section class="contact" id="contact">
       <div>
         <p class="eyebrow">READY TO ORDER?</p>
         <h2>Let's talk footwear.</h2>
         <p>
-          Send us the style codes you're interested in and we'll help
+          Send us your selected styles through WhatsApp and we'll help
           with your wholesale enquiry.
         </p>
       </div>
@@ -162,8 +253,10 @@
   <script src="app.js"></script>
 
   <!-- Cloudflare Web Analytics -->
-  <script type="module" src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "84a6cc429d39482cba78014e6d622b38"}'></script>
+  <script type="module"
+    src="https://static.cloudflareinsights.com/beacon.min.js"
+    data-cf-beacon='{"token":"84a6cc429d39482cba78014e6d622b38"}'>
+  </script>
   <!-- End Cloudflare Web Analytics -->
-
 </body>
 </html>
