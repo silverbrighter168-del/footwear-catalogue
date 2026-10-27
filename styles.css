@@ -1487,3 +1487,41 @@ div.product-image,
     font-size: 10px;
   }
 }
+
+/* FINAL FIX: Never stretch product photos */
+.product-card > img.product-image {
+  display: block !important;
+  width: 100% !important;
+  height: auto !important;
+  min-height: 0 !important;
+  max-height: none !important;
+  object-fit: initial !important;
+  aspect-ratio: auto !important;
+}
+
+.product-card .product-image img {
+  display: block !important;
+  width: 100% !important;
+  height: auto !important;
+  min-height: 0 !important;
+  max-height: none !important;
+  object-fit: initial !important;
+  aspect-ratio: auto !important;
+}
+
+/* Do not force the image container to a fixed height */
+.product-card > .product-image:not(img),
+.product-card div.product-image {
+  width: 100% !important;
+  height: auto !important;
+  min-height: 0 !important;
+  max-height: none !important;
+  flex: 0 0 auto !important;
+  overflow: visible !important;
+}
+
+/* Keep product cards flexible */
+.product-card {
+  height: auto;
+  min-width: 0;
+}
