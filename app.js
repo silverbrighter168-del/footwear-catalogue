@@ -14,7 +14,6 @@
   let currentLanguage = 'en';
   let cart = loadCart();
 
-  // TRANSLATIONS
   const TEXT = {
     en: {
       home: 'Home',
@@ -55,6 +54,7 @@
       howText: 'Choose your styles, enter carton quantities, review your cart and send your order through WhatsApp.',
       contactTitle: "Let's talk footwear.",
       heroEyebrow: 'MADE FOR EVERYDAY COMFORT',
+      heroTitle: 'Find your next best-seller.',
       heroDescription: 'Explore the Run First Sandals footwear collection by style code. Choose your styles, enter carton quantities and send your order directly to us through WhatsApp.',
       explore: 'Explore catalogue',
       wholesaleWelcome: 'Wholesale enquiries welcome',
@@ -126,6 +126,7 @@
       howText: '选择款式，输入箱数，检查购物车，然后通过 WhatsApp 发送订单。',
       contactTitle: '欢迎咨询鞋类产品。',
       heroEyebrow: '舒适每一天',
+      heroTitle: '寻找下一个畅销款。',
       heroDescription: '按产品编号浏览 Run First Sandals 鞋类目录。选择款式，输入订购箱数，然后通过 WhatsApp 直接发送订单。',
       explore: '浏览产品目录',
       wholesaleWelcome: '欢迎批发咨询',
@@ -173,7 +174,34 @@
     })[character]);
   }
 
-  // LANGUAGE
+  function loadCart() {
+    try {
+      const stored = localStorage.getItem(CART_STORAGE_KEY);
+      if (!stored) return [];
+
+      const parsed = JSON.parse(stored);
+      if (!Array.isArray(parsed)) return [];
+
+      return parsed.filter((item) =>
+        item &&
+        typeof item.code === 'string' &&
+        typeof item.sizeKey === 'string' &&
+        Number.isInteger(Number(item.cartons)) &&
+        Number(item.cartons) > 0
+      );
+    } catch (error) {
+      return [];
+    }
+  }
+
+  function saveCart() {
+    try {
+      localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(cart));
+    } catch (error) {
+      console.warn('Could not save cart.', error);
+    }
+  }
+
   function detectLanguage() {
     const urlLanguage = new URLSearchParams(window.location.search).get('lang');
 
@@ -185,7 +213,7 @@
       const saved = localStorage.getItem(LANGUAGE_STORAGE_KEY);
       if (saved === 'zh' || saved === 'en') return saved;
     } catch (error) {
-      // Continue with English.
+      // Use English if local storage is unavailable.
     }
 
     return 'en';
@@ -210,14 +238,19 @@
     updateContactButton();
   }
 
-  function updateStaticText() {
-    const languageSelect = $('language');
-    if (languageSelect) languageSelect.setAttribute('aria-label', t('language'));
+  function setText(selector, key) {
+    const element = document.querySelector(selector);
+    if (element) element.textContent = t(key);
+  }
 
-    const search = $('search');
-    if (search) {
-      search.placeholder = t('search');
-      search.setAttribute('aria-label', t('search'));
+  function updateStaticText() {
+    if ($('language')) {
+      $('language').setAttribute('aria-label', t('language'));
+    }
+
+    if ($('search')) {
+      $('search').placeholder = t('search');
+      $('search').setAttribute('aria-label', t('search'));
     }
 
     const category = $('category');
@@ -235,7 +268,9 @@
     }
 
     const headerContact = $('headerContact');
-    if (headerContact) headerContact.textContent = `${t('contact')} ↗`;
+    if (headerContact) {
+      headerContact.textContent = `${t('contact')} ↗`;
+    }
 
     const navLabels = {
       home: 'home',
@@ -256,38 +291,6 @@
       if (counter) navCart.appendChild(counter);
     }
 
-    const howSection = $('how-to-order');
-    if (howSection) {
-      const heading = howSection.querySelector('h2');
-      if (heading) heading.textContent = t('howTitle');
-    }
-
-    const contactSection = $('contact');
-    if (contactSection) {
-      const heading = contactSection.querySelector('h2');
-      if (heading) heading.textContent = t('contactTitle');
-    }
-
-    const clearButton = $('clearCart');
-    if (clearButton) clearButton.textContent = t('clearCart');
-
-    const checkoutButton = $('checkoutButton');
-    if (checkoutButton) {
-      checkoutButton.innerHTML = `${escapeHTML(t('checkout'))} <span>↗</span>`;
-    }
-
-    const whatsappButton = $('whatsappButton');
-    if (whatsappButton) {
-      whatsappButton.innerHTML = `${escapeHTML(t('contactWhatsApp'))} <span>↗</span>`;
-    }
-
-    // Translate previously hard-coded index.html content.
-    const setText = (selector, key) => {
-      const element = document.querySelector(selector);
-      if (element) element.textContent = t(key);
-    };
-
-    setText('.language-label', 'language');
     setText('.hero .eyebrow', 'heroEyebrow');
 
     const heroTitle = document.querySelector('.hero h1');
@@ -301,12 +304,14 @@
 
     const exploreButton = document.querySelector('.hero .primary-button');
     if (exploreButton) {
-      exploreButton.innerHTML = `${escapeHTML(t('explore'))} <span>↓</span>`;
+      exploreButton.innerHTML =
+        `${escapeHTML(t('explore'))} <span>↓</span>`;
     }
 
     const heroNote = document.querySelector('.hero-note');
     if (heroNote) {
-      heroNote.innerHTML = `<span class="dot"></span>${escapeHTML(t('wholesaleWelcome'))}`;
+      heroNote.innerHTML =
+        `<span class="dot"></span> ${escapeHTML(t('wholesaleWelcome'))}`;
     }
 
     const artLabel = document.querySelector('.art-label');
@@ -321,34 +326,60 @@
     setText('.section-description', 'catalogueDescription');
     setText('#empty h3', 'emptyTitle');
     setText('#empty p', 'emptyDescription');
-    setText('.ordering-guide > .eyebrow', 'orderingEyebrow');
 
-    const guide = document.querySelectorAll('.guide-grid article');
+    setText('#how-to-order > .eyebrow', 'orderingEyebrow');
+    setText('#how-to-order > h2', 'howTitle');
 
-    ['step1Title', 'step2Title', 'step3Title', 'step4Title'].forEach((key, i) => {
-      if (guide[i]) {
-        const heading = guide[i].querySelector('h3');
-        if (heading) heading.textContent = t(key);
-      }
-    });
+    // Explicitly translate each ordering card.
+    const guideTranslations = [
+      ['step1Title', 'step1Text'],
+      ['step2Title', 'step2Text'],
+      ['step3Title', 'step3Text'],
+      ['step4Title', 'step4Text']
+    ];
 
-    ['step1Text', 'step2Text', 'step3Text', 'step4Text'].forEach((key, i) => {
-      if (guide[i]) {
-        const paragraph = guide[i].querySelector('p');
-        if (paragraph) paragraph.textContent = t(key);
-      }
+    guideTranslations.forEach((keys, index) => {
+      const article = document.querySelector(
+        `#how-to-order .guide-grid article:nth-child(${index + 1})`
+      );
+
+      if (!article) return;
+
+      const heading = article.querySelector('h3');
+      const paragraph = article.querySelector('p');
+
+      if (heading) heading.textContent = t(keys[0]);
+      if (paragraph) paragraph.textContent = t(keys[1]);
     });
 
     setText('.cart-heading .eyebrow', 'yourOrder');
     setText('.cart-heading h2', 'cart');
     setText('.cart-intro', 'cartIntro');
     setText('.cart-note', 'priceNote');
-    setText('.contact .eyebrow', 'contactEyebrow');
-    setText('.contact > div > p:not(.eyebrow)', 'contactDescription');
+
+    setText('#contact .eyebrow', 'contactEyebrow');
+    setText('#contact h2', 'contactTitle');
+    setText('#contact > div > p:not(.eyebrow)', 'contactDescription');
+
+    const clearButton = $('clearCart');
+    if (clearButton) clearButton.textContent = t('clearCart');
+
+    const checkoutButton = $('checkoutButton');
+    if (checkoutButton) {
+      checkoutButton.innerHTML =
+        `${escapeHTML(t('checkout'))} <span>↗</span>`;
+    }
+
+    const whatsappButton = $('whatsappButton');
+    if (whatsappButton) {
+      whatsappButton.innerHTML =
+        `${escapeHTML(t('contactWhatsApp'))} <span>↗</span>`;
+    }
 
     const footer = document.querySelector('footer > p');
     if (footer) {
-      footer.innerHTML = `© <span id="year">${new Date().getFullYear()}</span> Run First Sandals. ${escapeHTML(t('footerRights'))}`;
+      footer.innerHTML =
+        `© <span id="year">${new Date().getFullYear()}</span> Run First Sandals. ${escapeHTML(t('footerRights'))}`;
     }
 
     const footerLink = document.querySelector('footer > a:last-child');
@@ -357,7 +388,6 @@
     updateCartNavigation();
   }
 
-  // PRODUCT HELPERS
   function productCode(product) {
     return String(product.code ?? '');
   }
@@ -385,7 +415,6 @@
     );
   }
 
-  // SIZE OPTIONS
   function getSizeOptions(product) {
     const code = productCode(product);
     const sizesText = productSizes(product);
@@ -399,7 +428,9 @@
     let letters = [];
 
     if (suffixMatch) {
-      letters = suffixMatch[1].split('/').map((letter) => letter.trim().toUpperCase());
+      letters = suffixMatch[1]
+        .split('/')
+        .map((letter) => letter.trim().toUpperCase());
     } else {
       const singleMatch = code.match(/([sml])$/i);
       if (singleMatch) letters = [singleMatch[1].toUpperCase()];
@@ -408,7 +439,9 @@
     if (letters.length > 0) {
       return letters.map((letter, index) => ({
         key: `${letter}-${index}`,
-        label: cleanedRanges[index] ? `${letter} (${cleanedRanges[index]})` : letter,
+        label: cleanedRanges[index]
+          ? `${letter} (${cleanedRanges[index]})`
+          : letter,
         size: cleanedRanges[index] || letter
       }));
     }
@@ -428,10 +461,9 @@
     }];
   }
 
-  // SEARCH, CATEGORY AND SORTING
   function filteredProducts() {
     const searchTerm = $('search').value.trim().toLowerCase();
-    const category = $('category').value.trim().toLowerCase();
+    const categoryValue = $('category').value.trim().toLowerCase();
     const sortValue = $('sort').value;
 
     let results = PRODUCTS.filter((product) => {
@@ -446,19 +478,20 @@
       const matchesSearch = !searchTerm || searchable.includes(searchTerm);
 
       const matchesCategory =
-        category === 'all' ||
-        category === '' ||
-        String(product.category || '').toLowerCase() === category;
+        categoryValue === 'all' ||
+        categoryValue === '' ||
+        String(product.category || '').toLowerCase() === categoryValue;
 
       return matchesSearch && matchesCategory;
     });
 
+    // If the source catalogue does not contain category data, don't hide all products.
     if (
       results.length === 0 &&
-      category !== 'all' &&
-      category !== '' &&
+      categoryValue !== 'all' &&
+      categoryValue !== '' &&
       !PRODUCTS.some((product) =>
-        String(product.category || '').toLowerCase() === category
+        String(product.category || '').toLowerCase() === categoryValue
       )
     ) {
       results = PRODUCTS.filter((product) => {
@@ -477,14 +510,17 @@
       results.sort((a, b) => productName(a).localeCompare(productName(b)));
     } else {
       results.sort((a, b) =>
-        productCode(a).localeCompare(productCode(b), undefined, { numeric: true })
+        productCode(a).localeCompare(
+          productCode(b),
+          undefined,
+          { numeric: true }
+        )
       );
     }
 
     return results;
   }
 
-  // RENDER PRODUCT CATALOGUE
   function renderProducts() {
     const container = $('products');
     const emptyState = $('empty');
@@ -511,7 +547,8 @@
 
       const sizeInputs = options.map((option) => `
         <div class="size-order-row">
-          <label class="size-order-label" for="qty-${productIndex}-${escapeHTML(option.key)}">
+          <label class="size-order-label"
+            for="qty-${productIndex}-${escapeHTML(option.key)}">
             ${escapeHTML(option.label)}
           </label>
           <input
@@ -551,14 +588,21 @@
           <div class="product-image-wrap">${imageHTML}</div>
           <div class="product-card-content">
             <h3 class="product-code">${escapeHTML(code)}</h3>
-            ${name !== code ? `<p class="product-name">${escapeHTML(name)}</p>` : ''}
-            ${sizes ? `<p class="product-size-info"><strong>${escapeHTML(t('sizes'))}:</strong> ${escapeHTML(sizes)}</p>` : ''}
+            ${name !== code
+              ? `<p class="product-name">${escapeHTML(name)}</p>`
+              : ''}
+            ${sizes
+              ? `<p class="product-size-info"><strong>${escapeHTML(t('sizes'))}:</strong> ${escapeHTML(sizes)}</p>`
+              : ''}
             <p class="product-pack-info">
               <strong>${escapeHTML(t('pairsPerCarton'))}:</strong>
-              ${pairs > 0 ? formatNumber(pairs) : escapeHTML(t('noPackSize'))}
+              ${pairs > 0
+                ? formatNumber(pairs)
+                : escapeHTML(t('noPackSize'))}
             </p>
             <div class="size-order-inputs">${sizeInputs}</div>
-            <button type="button" class="add-cart-button" data-add-product="${escapeHTML(code)}">
+            <button type="button" class="add-cart-button"
+              data-add-product="${escapeHTML(code)}">
               ${escapeHTML(t('addToCart'))}
             </button>
           </div>
@@ -573,35 +617,6 @@
     });
   }
 
-  // CART STORAGE
-  function loadCart() {
-    try {
-      const stored = localStorage.getItem(CART_STORAGE_KEY);
-      if (!stored) return [];
-
-      const parsed = JSON.parse(stored);
-      if (!Array.isArray(parsed)) return [];
-
-      return parsed.filter((item) =>
-        item &&
-        typeof item.code === 'string' &&
-        typeof item.sizeKey === 'string' &&
-        Number.isInteger(Number(item.cartons)) &&
-        Number(item.cartons) > 0
-      );
-    } catch (error) {
-      return [];
-    }
-  }
-
-  function saveCart() {
-    try {
-      localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(cart));
-    } catch (error) {
-      console.warn('Could not save cart.', error);
-    }
-  }
-
   function findProduct(code) {
     return PRODUCTS.find((product) => productCode(product) === String(code));
   }
@@ -610,7 +625,6 @@
     return PRODUCTS.findIndex((product) => productCode(product) === String(code));
   }
 
-  // ADD PRODUCTS TO CART
   function addProductToCart(code, button) {
     const product = findProduct(code);
     if (!product) return;
@@ -667,13 +681,13 @@
 
     if (button) {
       button.textContent = t('added');
+
       window.setTimeout(() => {
         button.textContent = t('addToCart');
       }, 1200);
     }
   }
 
-  // CART TOTALS
   function cartTotals() {
     return cart.reduce((totals, item) => {
       const product = findProduct(item.code);
@@ -689,7 +703,16 @@
     }, { cartons: 0, pairs: 0 });
   }
 
-  // RENDER CART
+  function updateCartNavigation() {
+    const totalCartons = cart.reduce(
+      (sum, item) => sum + (Number(item.cartons) || 0),
+      0
+    );
+
+    const navCounter = $('navCartCount');
+    if (navCounter) navCounter.textContent = formatNumber(totalCartons);
+  }
+
   function renderCart() {
     const container = $('cartItems');
 
@@ -727,7 +750,8 @@
               >
               <p>${formatNumber(pairs)} ${escapeHTML(t('pairs'))}</p>
             </div>
-            <button type="button" class="cart-remove-button" data-cart-remove="${index}">
+            <button type="button" class="cart-remove-button"
+              data-cart-remove="${index}">
               ${escapeHTML(t('remove'))}
             </button>
           </div>
@@ -749,7 +773,8 @@
 
     const totals = cartTotals();
 
-    $('cartCount').textContent = formatNumber(totals.cartons);
+    const cartCount = $('cartCount');
+    if (cartCount) cartCount.textContent = formatNumber(totals.cartons);
 
     const cartBadge = document.querySelector('.cart-badge');
     if (cartBadge) {
@@ -768,17 +793,6 @@
     updateCartNavigation();
   }
 
-  function updateCartNavigation() {
-    const totalCartons = cart.reduce(
-      (sum, item) => sum + (Number(item.cartons) || 0),
-      0
-    );
-
-    const navCounter = $('navCartCount');
-    if (navCounter) navCounter.textContent = formatNumber(totalCartons);
-  }
-
-  // CHANGE OR REMOVE CART ITEMS
   function updateCartQuantity(index, value) {
     if (!cart[index]) return;
 
@@ -812,7 +826,6 @@
     renderCart();
   }
 
-  // WHATSAPP
   function createWhatsAppURL(message) {
     return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
   }
@@ -873,24 +886,29 @@
     );
   }
 
-  // INITIALISE
   function init() {
     currentLanguage = detectLanguage();
 
-    $('language').value = currentLanguage;
+    if ($('language')) {
+      $('language').value = currentLanguage;
 
-    $('language').addEventListener('change', () => {
-      setLanguage($('language').value);
-    });
+      $('language').addEventListener('change', () => {
+        setLanguage($('language').value);
+      });
+    }
 
-    $('search').addEventListener('input', renderProducts);
-    $('category').addEventListener('change', renderProducts);
-    $('sort').addEventListener('change', renderProducts);
+    if ($('search')) $('search').addEventListener('input', renderProducts);
+    if ($('category')) $('category').addEventListener('change', renderProducts);
+    if ($('sort')) $('sort').addEventListener('change', renderProducts);
 
-    $('clearCart').addEventListener('click', clearCart);
-    $('checkoutButton').addEventListener('click', checkoutWhatsApp);
+    if ($('clearCart')) $('clearCart').addEventListener('click', clearCart);
+    if ($('checkoutButton')) {
+      $('checkoutButton').addEventListener('click', checkoutWhatsApp);
+    }
 
-    $('year').textContent = new Date().getFullYear();
+    if ($('year')) $('year').textContent = new Date().getFullYear();
+
+    document.documentElement.lang = currentLanguage === 'zh' ? 'zh-CN' : 'en';
 
     updateStaticText();
     renderProducts();
