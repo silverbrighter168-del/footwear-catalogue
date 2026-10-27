@@ -11,7 +11,8 @@
 
   const CONFIG = window.SITE_CONFIG || {};
 
-  const BUSINESS_NAME = CONFIG.businessName || 'Run First Sandals';
+  const BUSINESS_NAME = 'Run First Sandals';
+
   const WHATSAPP_NUMBER = String(
     CONFIG.whatsappNumber || '27822990061'
   ).replace(/\D/g, '');
@@ -32,105 +33,81 @@
     en: {
       home: 'Home',
       catalogue: 'Catalogue',
-      howToOrder: 'How to order',
+      how: 'How to order',
       contact: 'Contact',
       cart: 'Cart',
-      search: 'Search by product code...',
-      allCategories: 'All products',
-      sortCode: 'Sort by product code',
-      sortName: 'Sort by product name',
-      noProducts: 'No products found.',
+      search: 'Search style code or name…',
+      all: 'All footwear',
+      sortCode: 'Sort: Style code',
+      sortName: 'Sort: Name',
+      noProducts: 'No styles found. Try another search.',
       sizes: 'Sizes',
       pairsPerCarton: 'Pairs per carton',
-      carton: 'carton',
-      cartons: 'cartons',
-      quantity: 'Cartons',
+      cartons: 'Cartons',
       addToCart: 'Add to cart',
-      addedToCart: 'Added to cart.',
-      enterQuantity: 'Please enter at least one carton quantity.',
-      shoppingCart: 'Shopping cart',
-      emptyCart: 'Your cart is empty.',
-      product: 'Product',
+      added: 'Added!',
+      enterQuantity: 'Enter at least one carton quantity.',
+      invalidQuantity: 'Enter a whole number of cartons.',
+      emptyCart: 'Your cart is empty. Browse the catalogue to add styles.',
       size: 'Size',
-      pairs: 'Pairs',
-      subtotal: 'Total',
+      pairs: 'pairs',
       remove: 'Remove',
       clearCart: 'Clear cart',
-      checkout: 'Order via WhatsApp',
+      checkout: 'Send order on WhatsApp',
       totalCartons: 'Total cartons',
       totalPairs: 'Total pairs',
       confirmClear: 'Are you sure you want to clear your cart?',
-      invalidQuantity: 'Please enter a valid carton quantity.',
-      orderMessage: 'Hello, I would like to place the following wholesale order:',
       orderTitle: 'WHOLESALE ORDER',
-      thankYou: 'Thank you for your enquiry.',
-      contactWhatsApp: 'Contact us on WhatsApp',
-      missingPackSize: 'Carton quantity information is unavailable.',
-      howToOrderTitle: 'How to order',
-      howToOrderText:
-        'Choose your styles, enter the number of cartons for each size, review your cart, and send your order through WhatsApp.',
-      step1: '1. Browse the catalogue and select your styles.',
-      step2: '2. Enter the number of cartons required for each size.',
-      step3: '3. Review your cart and check the quantities.',
-      step4: '4. Send your order through WhatsApp.',
-      contactTitle: 'Contact us',
+      orderMessage: 'Hello, I would like to place the following wholesale order:',
+      thankYou: 'Please confirm pricing, availability and delivery.',
       imageUnavailable: 'Image unavailable',
-      languageEnglish: 'English',
-      languageChinese: '简体中文',
-      continueShopping: 'Continue shopping',
-      pairsShort: 'pairs'
+      contactWhatsApp: 'Enquire on WhatsApp',
+      noPackSize: 'Carton quantity unavailable',
+      language: 'Language',
+      emptySearch: 'No styles found',
+      howTitle: 'How to order',
+      howText: 'Choose your styles, enter carton quantities, review your cart and send your order through WhatsApp.',
+      contactTitle: "Let's talk footwear."
     },
 
     zh: {
       home: '首页',
       catalogue: '产品目录',
-      howToOrder: '订购方法',
+      how: '订购方法',
       contact: '联系我们',
       cart: '购物车',
-      search: '搜索产品编号...',
-      allCategories: '所有产品',
+      search: '搜索产品编号或名称…',
+      all: '所有鞋类',
       sortCode: '按产品编号排序',
-      sortName: '按产品名称排序',
-      noProducts: '没有找到产品。',
+      sortName: '按名称排序',
+      noProducts: '没有找到款式，请尝试其他搜索。',
       sizes: '尺码',
       pairsPerCarton: '每箱双数',
-      carton: '箱',
       cartons: '箱',
-      quantity: '箱数',
       addToCart: '加入购物车',
-      addedToCart: '已加入购物车。',
+      added: '已加入！',
       enterQuantity: '请输入至少一个产品的箱数。',
-      shoppingCart: '购物车',
-      emptyCart: '购物车是空的。',
-      product: '产品',
+      invalidQuantity: '请输入整数箱数。',
+      emptyCart: '购物车是空的，请浏览产品目录并添加款式。',
       size: '尺码',
       pairs: '双',
-      subtotal: '总计',
       remove: '删除',
       clearCart: '清空购物车',
-      checkout: '通过 WhatsApp 下单',
+      checkout: '通过 WhatsApp 发送订单',
       totalCartons: '总箱数',
       totalPairs: '总双数',
       confirmClear: '确定要清空购物车吗？',
-      invalidQuantity: '请输入有效的箱数。',
-      orderMessage: '您好，我想订购以下批发产品：',
       orderTitle: '批发订单',
-      thankYou: '感谢您的咨询。',
-      contactWhatsApp: '通过 WhatsApp 联系我们',
-      missingPackSize: '没有可用的每箱双数信息。',
-      howToOrderTitle: '订购方法',
-      howToOrderText:
-        '选择产品款式，输入每个尺码的箱数，检查购物车，然后通过 WhatsApp 发送订单。',
-      step1: '1. 浏览产品目录并选择款式。',
-      step2: '2. 输入每个尺码需要的箱数。',
-      step3: '3. 检查购物车和订购数量。',
-      step4: '4. 通过 WhatsApp 发送订单。',
-      contactTitle: '联系我们',
+      orderMessage: '您好，我想订购以下批发产品：',
+      thankYou: '请确认价格、库存和送货安排。',
       imageUnavailable: '图片无法显示',
-      languageEnglish: 'English',
-      languageChinese: '简体中文',
-      continueShopping: '继续购物',
-      pairsShort: '双'
+      contactWhatsApp: '通过 WhatsApp 咨询',
+      noPackSize: '没有每箱双数信息',
+      language: '语言',
+      emptySearch: '没有找到款式',
+      howTitle: '订购方法',
+      howText: '选择款式，输入箱数，检查购物车，然后通过 WhatsApp 发送订单。',
+      contactTitle: '欢迎咨询鞋类产品。'
     }
   };
 
@@ -143,8 +120,8 @@
   // =========================================================
 
   function detectLanguage() {
-    const params = new URLSearchParams(window.location.search);
-    const urlLanguage = params.get('lang');
+    const urlLanguage =
+      new URLSearchParams(window.location.search).get('lang');
 
     if (urlLanguage === 'zh' || urlLanguage === 'en') {
       return urlLanguage;
@@ -157,7 +134,7 @@
         return saved;
       }
     } catch (error) {
-      // Continue using English if localStorage is unavailable.
+      // Use English if storage is unavailable.
     }
 
     return 'en';
@@ -169,147 +146,157 @@
     try {
       localStorage.setItem(LANGUAGE_STORAGE_KEY, currentLanguage);
     } catch (error) {
-      // The page can still work without localStorage.
+      // Language still works for this page view.
     }
 
     document.documentElement.lang =
       currentLanguage === 'zh' ? 'zh-CN' : 'en';
 
-    const languageSelector =
-      $('languageSelect') ||
-      $('langSelect') ||
-      $('language');
+    $('language').value = currentLanguage;
 
-    if (languageSelector) {
-      languageSelector.value = currentLanguage;
-    }
-
-    applyLanguage();
+    updateStaticText();
     renderProducts();
     renderCart();
+    updateContactButton();
   }
 
-  function applyLanguage() {
-    document.querySelectorAll('[data-i18n]').forEach((element) => {
-      const key = element.getAttribute('data-i18n');
+  function updateStaticText() {
+    const languageSelect = $('language');
 
-      if (TEXT[currentLanguage][key]) {
-        element.textContent = t(key);
+    if (languageSelect) {
+      languageSelect.setAttribute('aria-label', t('language'));
+    }
+
+    const search = $('search');
+
+    if (search) {
+      search.placeholder = t('search');
+    }
+
+    const category = $('category');
+
+    if (category && category.options.length) {
+      category.options[0].textContent = t('all');
+    }
+
+    const sort = $('sort');
+
+    if (sort && sort.options.length >= 2) {
+      sort.options[0].textContent = t('sortCode');
+      sort.options[1].textContent = t('sortName');
+    }
+
+    const headerContact = $('headerContact');
+
+    if (headerContact) {
+      headerContact.textContent = `${t('contact')} ↗`;
+    }
+
+    const navLabels = {
+      home: 'home',
+      catalogue: 'catalogue',
+      how: 'how',
+      contact: 'contact'
+    };
+
+    document.querySelectorAll('[data-nav]').forEach((link) => {
+      const key = navLabels[link.dataset.nav];
+
+      if (key) {
+        link.textContent = t(key);
       }
     });
 
-    document.querySelectorAll('[data-i18n-placeholder]').forEach((element) => {
-      const key = element.getAttribute('data-i18n-placeholder');
+    const howSection = $('how-to-order');
 
-      if (TEXT[currentLanguage][key]) {
-        element.setAttribute('placeholder', t(key));
+    if (howSection) {
+      const heading = howSection.querySelector('h2');
+
+      if (heading) {
+        heading.textContent = t('howTitle');
       }
-    });
-
-    const searchInput =
-      $('productSearch') ||
-      $('searchInput') ||
-      $('searchProducts');
-
-    if (searchInput) {
-      searchInput.placeholder = t('search');
     }
 
-    const howToOrderTitle = $('howToOrderTitle');
+    const contactSection = $('contact');
 
-    if (howToOrderTitle) {
-      howToOrderTitle.textContent = t('howToOrderTitle');
+    if (contactSection) {
+      const heading = contactSection.querySelector('h2');
+
+      if (heading) {
+        heading.textContent = t('contactTitle');
+      }
     }
 
-    const howToOrderText = $('howToOrderText');
+    const clearButton = $('clearCart');
 
-    if (howToOrderText) {
-      howToOrderText.textContent = t('howToOrderText');
+    if (clearButton) {
+      clearButton.textContent = t('clearCart');
     }
 
-    const contactTitle = $('contactTitle');
+    const checkoutButton = $('checkoutButton');
 
-    if (contactTitle) {
-      contactTitle.textContent = t('contactTitle');
+    if (checkoutButton) {
+      checkoutButton.innerHTML =
+        `${escapeHTML(t('checkout'))} <span>↗</span>`;
+    }
+
+    const whatsappButton = $('whatsappButton');
+
+    if (whatsappButton) {
+      whatsappButton.innerHTML =
+        `${escapeHTML(t('contactWhatsApp'))} <span>↗</span>`;
     }
 
     updateCartNavigation();
   }
 
   // =========================================================
-  // PRODUCT INFORMATION
+  // PRODUCT HELPERS
   // =========================================================
 
   function productCode(product) {
-    return String(
-      product.code ??
-      product._id ??
-      product.stockCode ??
-      ''
-    );
+    return String(product.code ?? '');
   }
 
   function productName(product) {
-    return String(
-      product.name ||
-      product.description ||
-      productCode(product)
-    );
+    return String(product.name || productCode(product));
   }
 
   function productSizes(product) {
     return String(product.sizes || '').trim();
   }
 
-  // FIX: "20 pairs" becomes 20, and "36 pairs" becomes 36.
+  // FIX: "20 pairs", "36 pairs", and "48 pairs" are parsed correctly.
   function packSize(product) {
-    const value = String(
-      product.pairsPerCarton || ''
-    );
-
-    const match = value.match(/\d+/);
-
+    const match = String(product.pairsPerCarton || '').match(/\d+/);
     return match ? Number(match[0]) : 0;
   }
 
-  function formatNumber(value) {
-    return Number(value || 0).toLocaleString(
+  function imagePath(product) {
+    return String(product.image || '');
+  }
+
+  function formatNumber(number) {
+    return Number(number || 0).toLocaleString(
       currentLanguage === 'zh' ? 'zh-CN' : 'en-ZA'
     );
   }
 
   function escapeHTML(value) {
-    return String(value ?? '').replace(/[&<>"']/g, (character) => {
-      const entities = {
-        '&': '&amp;',
-        '<': '&lt;',
-        '>': '&gt;',
-        '"': '&quot;',
-        "'": '&#39;'
-      };
-
-      return entities[character];
-    });
-  }
-
-  function imagePath(product) {
-    return String(
-      product.image ||
-      product.imageUrl ||
-      product.photo ||
-      ''
-    );
+    return String(value ?? '').replace(/[&<>"']/g, (character) => ({
+      '&': '&amp;',
+      '<': '&lt;',
+      '>': '&gt;',
+      '"': '&quot;',
+      "'": '&#39;'
+    })[character]);
   }
 
   // =========================================================
   // SIZE OPTIONS
   //
-  // Examples:
-  // 6637L       -> one input: 6–11
-  // 6638s/m     -> S: 10–2, M: 3–8
-  // 6631s/m/L   -> S: 10–2, M: 3–8, L: 6–11
-  //
-  // Only the size ranges listed for the product are displayed.
+  // Only use the size ranges actually listed in products.js.
+  // Mixed-size products get separate quantity inputs.
   // =========================================================
 
   function getSizeOptions(product) {
@@ -360,146 +347,70 @@
       }));
     }
 
-    if (sizesText) {
-      return [{
-        key: 'default',
-        label: sizesText,
-        size: sizesText
-      }];
-    }
-
     return [{
       key: 'default',
-      label: currentLanguage === 'zh' ? '标准尺码' : 'Standard size',
-      size: currentLanguage === 'zh' ? '标准尺码' : 'Standard size'
+      label: sizesText || (currentLanguage === 'zh' ? '标准尺码' : 'Standard size'),
+      size: sizesText || 'Standard size'
     }];
   }
 
   // =========================================================
-  // PRODUCT FILTERS
+  // SEARCH, CATEGORY AND SORTING
   // =========================================================
 
-  function getSearchInput() {
-    return (
-      $('productSearch') ||
-      $('searchInput') ||
-      $('searchProducts')
-    );
-  }
-
-  function getCategorySelect() {
-    return (
-      $('categoryFilter') ||
-      $('categorySelect') ||
-      $('productCategory')
-    );
-  }
-
-  function getSortSelect() {
-    return (
-      $('sortBy') ||
-      $('sortSelect') ||
-      $('productSort')
-    );
-  }
-
-  function getProductContainer() {
-    return (
-      $('productsGrid') ||
-      $('productGrid') ||
-      $('catalogueGrid') ||
-      $('products')
-    );
-  }
-
   function filteredProducts() {
-    const searchInput = getSearchInput();
-    const categorySelect = getCategorySelect();
-    const sortSelect = getSortSelect();
-
-    const search = searchInput
-      ? searchInput.value.trim().toLowerCase()
-      : '';
-
-    const category = categorySelect
-      ? categorySelect.value.trim().toLowerCase()
-      : 'all';
+    const searchTerm = $('search').value.trim().toLowerCase();
+    const category = $('category').value.trim().toLowerCase();
+    const sortValue = $('sort').value;
 
     let results = PRODUCTS.filter((product) => {
       const searchable = [
         productCode(product),
         productName(product),
-        product.category || '',
         productSizes(product),
-        product.pairsPerCarton || ''
+        product.pairsPerCarton || '',
+        product.category || ''
       ].join(' ').toLowerCase();
 
-      const matchesSearch = !search || searchable.includes(search);
+      const matchesSearch =
+        !searchTerm || searchable.includes(searchTerm);
 
-      const actualCategory = String(
-        product.category || ''
-      ).trim().toLowerCase();
-
+      // All current products are category "Footwear".
+      // Therefore Sandals/Slippers/Other cannot be accurately
+      // separated until their category data is updated.
       const matchesCategory =
-        !category ||
         category === 'all' ||
-        category === 'all products' ||
-        actualCategory === category;
+        category === '' ||
+        String(product.category || '').toLowerCase() === category;
 
       return matchesSearch && matchesCategory;
     });
 
-    // If the current product database only contains "Footwear",
-    // avoid displaying an empty catalogue for unsupported categories.
+    // Avoid a misleading empty catalogue when the chosen category
+    // doesn't exist in products.js. Search still works.
     if (
       results.length === 0 &&
-      category &&
       category !== 'all' &&
-      category !== 'all products'
+      category !== '' &&
+      !PRODUCTS.some((product) =>
+        String(product.category || '').toLowerCase() === category
+      )
     ) {
-      const categoryMatchesExist = PRODUCTS.some((product) => {
-        return String(product.category || '')
-          .trim()
-          .toLowerCase() === category;
+      results = PRODUCTS.filter((product) => {
+        const searchable = [
+          productCode(product),
+          productName(product),
+          productSizes(product),
+          product.pairsPerCarton || ''
+        ].join(' ').toLowerCase();
+
+        return !searchTerm || searchable.includes(searchTerm);
       });
-
-      if (!categoryMatchesExist) {
-        results = PRODUCTS.filter((product) => {
-          const searchable = [
-            productCode(product),
-            productName(product),
-            product.category || '',
-            productSizes(product),
-            product.pairsPerCarton || ''
-          ].join(' ').toLowerCase();
-
-          return !search || searchable.includes(search);
-        });
-      }
     }
 
-    const sortValue = sortSelect ? sortSelect.value : 'code';
-
-    if (
-      sortValue === 'name' ||
-      sortValue === 'name-asc' ||
-      sortValue === 'nameAsc'
-    ) {
+    if (sortValue === 'name') {
       results.sort((a, b) =>
         productName(a).localeCompare(productName(b))
-      );
-    } else if (
-      sortValue === 'name-desc' ||
-      sortValue === 'nameDesc'
-    ) {
-      results.sort((a, b) =>
-        productName(b).localeCompare(productName(a))
-      );
-    } else if (sortValue === 'code-desc') {
-      results.sort((a, b) =>
-        productCode(b).localeCompare(productCode(a), undefined, {
-          numeric: true
-        })
       );
     } else {
       results.sort((a, b) =>
@@ -513,86 +424,67 @@
   }
 
   // =========================================================
-  // RENDER PRODUCTS
+  // RENDER PRODUCT CATALOGUE
   // =========================================================
 
   function renderProducts() {
-    const container = getProductContainer();
+    const container = $('products');
+    const emptyState = $('empty');
+    const results = filteredProducts();
 
-    if (!container) {
-      console.error(
-        'Product grid not found. Check the product grid ID in index.html.'
-      );
+    $('resultCount').textContent =
+      `${formatNumber(results.length)} ${currentLanguage === 'zh' ? '个款式' : 'styles'}`;
+
+    if (emptyState) {
+      emptyState.hidden = results.length !== 0;
+    }
+
+    if (results.length === 0) {
+      container.innerHTML = '';
       return;
     }
 
-    const products = filteredProducts();
-
-    if (products.length === 0) {
-      container.innerHTML = `
-        <p class="no-products">
-          ${escapeHTML(t('noProducts'))}
-        </p>
-      `;
-      updateProductCount(0);
-      return;
-    }
-
-    container.innerHTML = products.map((product, index) => {
+    container.innerHTML = results.map((product) => {
       const code = productCode(product);
       const name = productName(product);
       const sizes = productSizes(product);
       const pairs = packSize(product);
       const image = imagePath(product);
       const options = getSizeOptions(product);
+      const productIndex = PRODUCTS.indexOf(product);
 
-      const safeCode = escapeHTML(code);
-      const safeName = escapeHTML(name);
-      const safeSizes = escapeHTML(sizes);
-      const safeImage = escapeHTML(image);
+      const sizeInputs = options.map((option) => `
+        <div class="size-order-row">
+          <label
+            class="size-order-label"
+            for="qty-${productIndex}-${escapeHTML(option.key)}"
+          >
+            ${escapeHTML(option.label)}
+          </label>
 
-      const sizeInputs = options.map((option) => {
-        const optionKey = escapeHTML(option.key);
-        const optionLabel = escapeHTML(option.label);
-
-        return `
-          <div class="size-order-row">
-            <label
-              for="qty-${index}-${optionKey}"
-              class="size-order-label"
-            >
-              ${optionLabel}
-            </label>
-
-            <input
-              id="qty-${index}-${optionKey}"
-              class="cart-quantity-input"
-              type="number"
-              min="0"
-              step="1"
-              value="0"
-              inputmode="numeric"
-              data-product-code="${safeCode}"
-              data-size-key="${optionKey}"
-              aria-label="${escapeHTML(t('quantity'))} ${optionLabel}"
-            />
-          </div>
-        `;
-      }).join('');
+          <input
+            id="qty-${productIndex}-${escapeHTML(option.key)}"
+            class="cart-quantity-input"
+            type="number"
+            min="0"
+            step="1"
+            value="0"
+            inputmode="numeric"
+            aria-label="${escapeHTML(t('cartons'))}: ${escapeHTML(option.label)}"
+          >
+        </div>
+      `).join('');
 
       const imageHTML = image
         ? `
           <img
             class="product-image"
-            src="${safeImage}"
-            alt="${safeName}"
+            src="${escapeHTML(image)}"
+            alt="${escapeHTML(name)}"
             loading="lazy"
-            onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
+            onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"
           >
-          <div
-            class="product-image-fallback"
-            style="display:none;"
-          >
+          <div class="product-image-fallback" style="display:none">
             ${escapeHTML(t('imageUnavailable'))}
           </div>
         `
@@ -603,37 +495,32 @@
         `;
 
       return `
-        <article
-          class="product-card"
-          data-product-code="${safeCode}"
-        >
+        <article class="product-card" data-product-code="${escapeHTML(code)}">
           <div class="product-image-wrap">
             ${imageHTML}
           </div>
 
           <div class="product-card-content">
-            <h3 class="product-code">${safeCode}</h3>
+            <h3 class="product-code">${escapeHTML(code)}</h3>
 
-            ${
-              name !== code
-                ? `<p class="product-name">${safeName}</p>`
-                : ''
-            }
+            ${name !== code
+              ? `<p class="product-name">${escapeHTML(name)}</p>`
+              : ''}
 
-            ${
-              sizes
-                ? `
-                  <p class="product-size-info">
-                    <strong>${escapeHTML(t('sizes'))}:</strong>
-                    ${safeSizes}
-                  </p>
-                `
-                : ''
-            }
+            ${sizes
+              ? `
+                <p class="product-size-info">
+                  <strong>${escapeHTML(t('sizes'))}:</strong>
+                  ${escapeHTML(sizes)}
+                </p>
+              `
+              : ''}
 
             <p class="product-pack-info">
               <strong>${escapeHTML(t('pairsPerCarton'))}:</strong>
-              ${pairs > 0 ? formatNumber(pairs) : '—'}
+              ${pairs > 0
+                ? formatNumber(pairs)
+                : escapeHTML(t('noPackSize'))}
             </p>
 
             <div class="size-order-inputs">
@@ -643,7 +530,7 @@
             <button
               type="button"
               class="add-cart-button"
-              data-add-product="${safeCode}"
+              data-add-product="${escapeHTML(code)}"
             >
               ${escapeHTML(t('addToCart'))}
             </button>
@@ -657,19 +544,6 @@
         addProductToCart(button.dataset.addProduct, button);
       });
     });
-
-    updateProductCount(products.length);
-  }
-
-  function updateProductCount(count) {
-    const counter =
-      $('productCount') ||
-      $('catalogueCount') ||
-      $('resultsCount');
-
-    if (counter) {
-      counter.textContent = formatNumber(count);
-    }
   }
 
   // =========================================================
@@ -690,81 +564,60 @@
         return [];
       }
 
-      return parsed.filter((item) => {
-        return (
-          item &&
-          typeof item.code === 'string' &&
-          typeof item.sizeKey === 'string' &&
-          Number(item.cartons) > 0
-        );
-      });
+      return parsed.filter((item) =>
+        item &&
+        typeof item.code === 'string' &&
+        typeof item.sizeKey === 'string' &&
+        Number.isInteger(Number(item.cartons)) &&
+        Number(item.cartons) > 0
+      );
     } catch (error) {
-      console.warn('Could not load shopping cart:', error);
       return [];
     }
   }
 
   function saveCart() {
     try {
-      localStorage.setItem(
-        CART_STORAGE_KEY,
-        JSON.stringify(cart)
-      );
+      localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(cart));
     } catch (error) {
-      console.warn('Could not save shopping cart:', error);
+      console.warn('Could not save cart.', error);
     }
   }
 
   function findProduct(code) {
-    return PRODUCTS.find(
-      (product) => productCode(product) === String(code)
-    );
+    return PRODUCTS.find((product) => productCode(product) === String(code));
   }
 
-  function findSizeOption(product, sizeKey) {
-    return getSizeOptions(product).find(
-      (option) => option.key === sizeKey
-    );
+  function getProductIndex(code) {
+    return PRODUCTS.findIndex((product) => productCode(product) === String(code));
   }
 
   // =========================================================
-  // ADD TO CART
+  // ADD PRODUCTS TO CART
   // =========================================================
 
   function addProductToCart(code, button) {
     const product = findProduct(code);
 
     if (!product) {
-      alert('Product not found: ' + code);
       return;
     }
 
+    const productIndex = getProductIndex(code);
     const options = getSizeOptions(product);
-    let addedSomething = false;
+
+    let added = false;
 
     for (const option of options) {
-      const inputId =
-        `qty-${getProductIndex(code)}-${option.key}`;
+      const input = $(`qty-${productIndex}-${option.key}`);
 
-      const input = $(inputId);
-
-      if (!input) {
+      if (!input || input.value.trim() === '') {
         continue;
       }
 
-      const rawValue = input.value.trim();
+      const cartons = Number(input.value);
 
-      if (rawValue === '') {
-        continue;
-      }
-
-      const cartons = Number(rawValue);
-
-      if (
-        !Number.isFinite(cartons) ||
-        cartons < 0 ||
-        !Number.isInteger(cartons)
-      ) {
+      if (!Number.isInteger(cartons) || cartons < 0) {
         alert(t('invalidQuantity'));
         input.focus();
         return;
@@ -774,12 +627,10 @@
         continue;
       }
 
-      const existing = cart.find((item) => {
-        return (
-          item.code === String(code) &&
-          item.sizeKey === option.key
-        );
-      });
+      const existing = cart.find((item) =>
+        item.code === String(code) &&
+        item.sizeKey === option.key
+      );
 
       if (existing) {
         existing.cartons += cartons;
@@ -793,10 +644,10 @@
         });
       }
 
-      addedSomething = true;
+      added = true;
     }
 
-    if (!addedSomething) {
+    if (!added) {
       alert(t('enterQuantity'));
       return;
     }
@@ -804,11 +655,8 @@
     saveCart();
     renderCart();
 
-    // Reset the inputs for this product after adding it.
     options.forEach((option) => {
-      const input = $(
-        `qty-${getProductIndex(code)}-${option.key}`
-      );
+      const input = $(`qty-${productIndex}-${option.key}`);
 
       if (input) {
         input.value = '0';
@@ -816,48 +664,37 @@
     });
 
     if (button) {
-      const originalText = button.textContent;
-
-      button.textContent = t('addedToCart');
+      button.textContent = t('added');
 
       window.setTimeout(() => {
         button.textContent = t('addToCart');
-      }, 1400);
+      }, 1200);
     }
   }
 
-  function getProductIndex(code) {
-    return PRODUCTS.findIndex(
-      (product) => productCode(product) === String(code)
-    );
-  }
-
   // =========================================================
-  // CART CALCULATIONS
+  // CART TOTALS
   // =========================================================
 
   function cartTotals() {
-    let totalCartons = 0;
-    let totalPairs = 0;
-
-    cart.forEach((item) => {
+    return cart.reduce((totals, item) => {
       const product = findProduct(item.code);
 
       if (!product) {
-        return;
+        return totals;
       }
 
       const cartons = Number(item.cartons) || 0;
       const pairsPerCarton = packSize(product);
 
-      totalCartons += cartons;
-      totalPairs += cartons * pairsPerCarton;
-    });
+      totals.cartons += cartons;
+      totals.pairs += cartons * pairsPerCarton;
 
-    return {
-      totalCartons,
-      totalPairs
-    };
+      return totals;
+    }, {
+      cartons: 0,
+      pairs: 0
+    });
   }
 
   // =========================================================
@@ -867,126 +704,93 @@
   function renderCart() {
     const container = $('cartItems');
 
-    const validCart = cart.filter((item) => {
-      return findProduct(item.code);
-    });
+    cart = cart.filter((item) => findProduct(item.code));
+    saveCart();
 
-    if (validCart.length !== cart.length) {
-      cart = validCart;
-      saveCart();
-    }
+    if (cart.length === 0) {
+      container.innerHTML = `
+        <div class="cart-empty">
+          ${escapeHTML(t('emptyCart'))}
+        </div>
+      `;
+    } else {
+      container.innerHTML = cart.map((item, index) => {
+        const product = findProduct(item.code);
+        const cartons = Number(item.cartons) || 0;
+        const pairsPerCarton = packSize(product);
+        const pairs = cartons * pairsPerCarton;
 
-    if (container) {
-      if (cart.length === 0) {
-        container.innerHTML = `
-          <p class="empty-cart">
-            ${escapeHTML(t('emptyCart'))}
-          </p>
-        `;
-      } else {
-        container.innerHTML = cart.map((item, index) => {
-          const product = findProduct(item.code);
+        return `
+          <div class="cart-item" data-cart-index="${index}">
+            <div class="cart-item-details">
+              <strong class="cart-item-code">
+                ${escapeHTML(productCode(product))}
+              </strong>
 
-          if (!product) {
-            return '';
-          }
+              <p>
+                ${escapeHTML(t('size'))}:
+                ${escapeHTML(item.sizeLabel || item.size)}
+              </p>
 
-          const pairsPerCarton = packSize(product);
-          const cartons = Number(item.cartons) || 0;
-          const pairs = cartons * pairsPerCarton;
-
-          const code = escapeHTML(item.code);
-          const sizeLabel = escapeHTML(
-            item.sizeLabel || item.size || ''
-          );
-
-          return `
-            <div class="cart-item" data-cart-index="${index}">
-              <div class="cart-item-details">
-                <strong class="cart-item-code">${code}</strong>
-
-                <p>
-                  ${escapeHTML(t('size'))}:
-                  ${sizeLabel}
-                </p>
-
-                <p>
-                  ${escapeHTML(t('pairsPerCarton'))}:
-                  ${formatNumber(pairsPerCarton)}
-                </p>
-              </div>
-
-              <div class="cart-item-quantity">
-                <label for="cart-qty-${index}">
-                  ${escapeHTML(t('quantity'))}
-                </label>
-
-                <input
-                  id="cart-qty-${index}"
-                  class="cart-update-quantity"
-                  type="number"
-                  min="1"
-                  step="1"
-                  value="${cartons}"
-                  data-cart-update="${index}"
-                >
-
-                <p>
-                  ${formatNumber(pairs)}
-                  ${escapeHTML(t('pairs'))}
-                </p>
-              </div>
-
-              <button
-                type="button"
-                class="cart-remove-button"
-                data-cart-remove="${index}"
-              >
-                ${escapeHTML(t('remove'))}
-              </button>
+              <p>
+                ${escapeHTML(t('pairsPerCarton'))}:
+                ${formatNumber(pairsPerCarton)}
+              </p>
             </div>
-          `;
-        }).join('');
 
-        container.querySelectorAll('[data-cart-update]').forEach((input) => {
-          input.addEventListener('change', () => {
-            updateCartQuantity(
-              Number(input.dataset.cartUpdate),
-              input.value
-            );
-          });
-        });
+            <div class="cart-item-quantity">
+              <label for="cart-qty-${index}">
+                ${escapeHTML(t('cartons'))}
+              </label>
 
-        container.querySelectorAll('[data-cart-remove]').forEach((button) => {
-          button.addEventListener('click', () => {
-            removeCartItem(Number(button.dataset.cartRemove));
-          });
+              <input
+                id="cart-qty-${index}"
+                class="cart-update-quantity"
+                type="number"
+                min="1"
+                step="1"
+                value="${cartons}"
+                data-cart-update="${index}"
+              >
+
+              <p>
+                ${formatNumber(pairs)} ${escapeHTML(t('pairs'))}
+              </p>
+            </div>
+
+            <button
+              type="button"
+              class="cart-remove-button"
+              data-cart-remove="${index}"
+            >
+              ${escapeHTML(t('remove'))}
+            </button>
+          </div>
+        `;
+      }).join('');
+
+      container.querySelectorAll('[data-cart-update]').forEach((input) => {
+        input.addEventListener('change', () => {
+          updateCartQuantity(Number(input.dataset.cartUpdate), input.value);
         });
-      }
+      });
+
+      container.querySelectorAll('[data-cart-remove]').forEach((button) => {
+        button.addEventListener('click', () => {
+          removeCartItem(Number(button.dataset.cartRemove));
+        });
+      });
     }
 
     const totals = cartTotals();
 
-    if ($('cartCount')) {
-      $('cartCount').textContent = formatNumber(
-        cart.reduce((sum, item) => sum + (Number(item.cartons) || 0), 0)
-      );
-    }
+    $('cartCount').textContent = formatNumber(totals.cartons);
+    $('cartTotalCartons').textContent = formatNumber(totals.cartons);
+    $('cartTotalPairs').textContent = formatNumber(totals.pairs);
 
-    if ($('cartTotalCartons')) {
-      $('cartTotalCartons').textContent = formatNumber(
-        totals.totalCartons
-      );
-    }
-
-    if ($('cartTotalPairs')) {
-      $('cartTotalPairs').textContent = formatNumber(
-        totals.totalPairs
-      );
-    }
+    $('checkoutButton').disabled = cart.length === 0;
 
     updateCartNavigation();
-    updateCheckoutButton();
   }
 
   function updateCartNavigation() {
@@ -998,26 +802,12 @@
     const navCounter = $('navCartCount');
 
     if (navCounter) {
-      navCounter.textContent = `${t('cart')} (${totalCartons})`;
-    }
-
-    const cartLink = $('cartLink');
-
-    if (cartLink) {
-      cartLink.textContent = `${t('cart')} (${totalCartons})`;
-    }
-  }
-
-  function updateCheckoutButton() {
-    const button = $('checkoutButton');
-
-    if (button) {
-      button.disabled = cart.length === 0;
+      navCounter.textContent = formatNumber(totalCartons);
     }
   }
 
   // =========================================================
-  // UPDATE AND REMOVE CART ITEMS
+  // CHANGE OR REMOVE CART ITEMS
   // =========================================================
 
   function updateCartQuantity(index, value) {
@@ -1027,11 +817,7 @@
 
     const cartons = Number(value);
 
-    if (
-      !Number.isFinite(cartons) ||
-      !Number.isInteger(cartons) ||
-      cartons < 1
-    ) {
+    if (!Number.isInteger(cartons) || cartons < 1) {
       alert(t('invalidQuantity'));
       renderCart();
       return;
@@ -1070,17 +856,28 @@
   }
 
   // =========================================================
-  // WHATSAPP CHECKOUT
+  // WHATSAPP
   // =========================================================
+
+  function createWhatsAppURL(message) {
+    return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
+  }
+
+  function updateContactButton() {
+    const button = $('whatsappButton');
+
+    if (button) {
+      button.href = createWhatsAppURL(
+        currentLanguage === 'zh'
+          ? '您好，我想咨询批发鞋类产品。'
+          : 'Hello, I am interested in your wholesale footwear catalogue.'
+      );
+    }
+  }
 
   function checkoutWhatsApp() {
     if (cart.length === 0) {
       alert(t('emptyCart'));
-      return;
-    }
-
-    if (!WHATSAPP_NUMBER) {
-      alert('WhatsApp number is missing.');
       return;
     }
 
@@ -1100,109 +897,57 @@
         return;
       }
 
-      const pairsPerCarton = packSize(product);
       const cartons = Number(item.cartons) || 0;
+      const pairsPerCarton = packSize(product);
       const pairs = cartons * pairsPerCarton;
 
-      lines.push(
-        `${index + 1}. ${productCode(product)}`
-      );
-
-      lines.push(
-        `   ${t('size')}: ${item.sizeLabel || item.size}`
-      );
-
-      lines.push(
-        `   ${t('quantity')}: ${cartons} ${t('cartons')}`
-      );
-
-      lines.push(
-        `   ${t('pairsPerCarton')}: ${pairsPerCarton}`
-      );
-
-      lines.push(
-        `   ${t('pairs')}: ${pairs}`
-      );
-
+      lines.push(`${index + 1}. ${productCode(product)}`);
+      lines.push(`   ${t('size')}: ${item.sizeLabel || item.size}`);
+      lines.push(`   ${t('cartons')}: ${cartons}`);
+      lines.push(`   ${t('pairsPerCarton')}: ${pairsPerCarton}`);
+      lines.push(`   ${t('pairs')}: ${pairs}`);
       lines.push('');
     });
 
     lines.push('------------------------');
-    lines.push(
-      `${t('totalCartons')}: ${totals.totalCartons}`
-    );
-    lines.push(
-      `${t('totalPairs')}: ${totals.totalPairs}`
-    );
+    lines.push(`${t('totalCartons')}: ${totals.cartons}`);
+    lines.push(`${t('totalPairs')}: ${totals.pairs}`);
     lines.push('');
     lines.push(t('thankYou'));
 
-    const message = lines.join('\n');
-
-    const whatsappURL =
-      `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
-
-    window.open(whatsappURL, '_blank', 'noopener,noreferrer');
+    window.open(
+      createWhatsAppURL(lines.join('\n')),
+      '_blank',
+      'noopener,noreferrer'
+    );
   }
 
   // =========================================================
-  // EVENT LISTENERS
-  // =========================================================
-
-  function setupEventListeners() {
-    const languageSelector =
-      $('languageSelect') ||
-      $('langSelect') ||
-      $('language');
-
-    if (languageSelector) {
-      languageSelector.addEventListener('change', () => {
-        setLanguage(languageSelector.value);
-      });
-    }
-
-    const searchInput = getSearchInput();
-
-    if (searchInput) {
-      searchInput.addEventListener('input', renderProducts);
-    }
-
-    const categorySelect = getCategorySelect();
-
-    if (categorySelect) {
-      categorySelect.addEventListener('change', renderProducts);
-    }
-
-    const sortSelect = getSortSelect();
-
-    if (sortSelect) {
-      sortSelect.addEventListener('change', renderProducts);
-    }
-
-    const clearButton = $('clearCart');
-
-    if (clearButton) {
-      clearButton.addEventListener('click', clearCart);
-    }
-
-    const checkoutButton = $('checkoutButton');
-
-    if (checkoutButton) {
-      checkoutButton.addEventListener('click', checkoutWhatsApp);
-    }
-  }
-
-  // =========================================================
-  // START APPLICATION
+  // INITIALISE
   // =========================================================
 
   function init() {
     currentLanguage = detectLanguage();
 
-    setupEventListeners();
-    applyLanguage();
+    $('language').value = currentLanguage;
+
+    $('language').addEventListener('change', () => {
+      setLanguage($('language').value);
+    });
+
+    $('search').addEventListener('input', renderProducts);
+    $('category').addEventListener('change', renderProducts);
+    $('sort').addEventListener('change', renderProducts);
+
+    $('clearCart').addEventListener('click', clearCart);
+    $('checkoutButton').addEventListener('click', checkoutWhatsApp);
+
+    $('year').textContent = new Date().getFullYear();
+
+    updateStaticText();
     renderProducts();
     renderCart();
+    updateContactButton();
   }
 
   if (document.readyState === 'loading') {
