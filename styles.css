@@ -1192,104 +1192,6 @@ footer > a:last-child {
   }
 }
 
-/* Separate carton input for each size range */
-.size-order-inputs {
-  display: grid;
-  gap: 8px;
-  margin-top: 12px;
-}
-
-.size-order-row {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) 76px;
-  align-items: center;
-  gap: 8px;
-  padding: 9px;
-  border: 1px solid var(--line);
-  border-radius: 8px;
-  background: #fbfcff;
-}
-
-.size-order-row label {
-  min-width: 0;
-  color: var(--ink);
-  font-size: 11px;
-  line-height: 1.4;
-  overflow-wrap: anywhere;
-}
-
-.size-order-row label strong {
-  color: var(--blue);
-  font-size: 13px;
-}
-
-.size-order-row input {
-  width: 100%;
-  min-width: 0;
-  padding: 10px 6px;
-  border: 1px solid var(--line);
-  border-radius: 6px;
-  background: #fff;
-  font: inherit;
-  font-size: 14px;
-}
-
-.product-order {
-  display: grid;
-  grid-template-columns: 1fr 80px;
-  gap: 8px;
-  align-items: center;
-  margin-top: 12px;
-}
-
-.product-order label {
-  color: var(--muted);
-  font-size: 11px;
-  font-weight: 700;
-}
-
-.product-order input {
-  width: 100%;
-  min-width: 0;
-  padding: 10px 8px;
-  border: 1px solid var(--line);
-  border-radius: 7px;
-  background: #fff;
-  color: var(--ink);
-  font: inherit;
-  font-size: 14px;
-}
-
-.add-cart-button {
-  width: 100%;
-  margin-top: 10px;
-  padding: 12px 10px;
-  border: 0;
-  border-radius: 7px;
-  background: var(--blue);
-  color: #fff;
-  font: inherit;
-  font-size: 12px;
-  font-weight: 700;
-  cursor: pointer;
-}
-
-.add-cart-button:hover {
-  background: #1743c2;
-}
-
-@media (max-width: 360px) {
-  .size-order-row {
-    grid-template-columns: minmax(0, 1fr) 65px;
-    gap: 6px;
-    padding: 7px;
-  }
-
-  .size-order-row label {
-    font-size: 10px;
-  }
-}
-
 /* Compact shopping cart — one line per item on desktop */
 .cart-items {
   display: flex;
@@ -1384,8 +1286,8 @@ footer > a:last-child {
 }
 
 
-/* Final product image and card layout fix
-   Preserve source photo proportions at every browser zoom level. */
+
+/* Product cards: preserve image proportions and align order buttons */
 .product-grid {
   align-items: stretch;
 }
@@ -1395,151 +1297,18 @@ footer > a:last-child {
   flex-direction: column;
   min-width: 0;
   height: 100%;
-}
-
-/* The product image may be an IMG itself. Never force a fixed image height. */
-img.product-image {
-  display: block;
-  width: 100%;
-  height: auto !important;
-  min-height: 0 !important;
-  max-height: none !important;
-  object-fit: contain !important;
-  object-position: center;
-  background: #fff;
-}
-
-/* Also support a wrapper containing the image. */
-.product-image img {
-  display: block;
-  width: 100%;
-  height: auto !important;
-  max-height: none !important;
-  object-fit: contain !important;
-  object-position: center;
-}
-
-div.product-image,
-.product-card > .product-image:not(img) {
-  width: 100%;
-  height: auto !important;
-  min-height: 0 !important;
-  max-height: none !important;
-  flex: 0 0 auto !important;
   overflow: hidden;
-  line-height: 0;
   background: #fff;
-}
-
-/* Keep card content flexible without changing photo proportions. */
-.product-info {
-  display: flex;
-  flex-direction: column;
-  flex: 1 1 auto;
-  min-width: 0;
-}
-
-.size-order-inputs {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
-.size-order-row {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(65px, 76px);
-  align-items: center;
-  gap: 8px;
-  box-sizing: border-box;
-}
-
-.size-order-row label {
-  min-width: 0;
-  white-space: nowrap;
-  overflow-wrap: normal;
-  word-break: normal;
-}
-
-.size-order-row input {
-  width: 100%;
-  min-width: 0;
-  box-sizing: border-box;
-}
-
-.add-cart-button {
-  width: 100%;
-}
-
-@media (max-width: 650px) {
-  .size-order-row {
-    grid-template-columns: minmax(0, 1fr) minmax(58px, 76px);
-    gap: 6px;
-  }
-}
-
-@media (max-width: 360px) {
-  .size-order-row {
-    grid-template-columns: minmax(0, 1fr) 60px;
-    gap: 5px;
-  }
-
-  .size-order-row label {
-    font-size: 10px;
-  }
-}
-
-/* FINAL FIX: Never stretch product photos */
-.product-card > img.product-image {
-  display: block !important;
-  width: 100% !important;
-  height: auto !important;
-  min-height: 0 !important;
-  max-height: none !important;
-  object-fit: initial !important;
-  aspect-ratio: auto !important;
-}
-
-.product-card .product-image img {
-  display: block !important;
-  width: 100% !important;
-  height: auto !important;
-  min-height: 0 !important;
-  max-height: none !important;
-  object-fit: initial !important;
-  aspect-ratio: auto !important;
-}
-
-/* Do not force the image container to a fixed height */
-.product-card > .product-image:not(img),
-.product-card div.product-image {
-  width: 100% !important;
-  height: auto !important;
-  min-height: 0 !important;
-  max-height: none !important;
-  flex: 0 0 auto !important;
-  overflow: visible !important;
-}
-
-/* Keep product cards flexible */
-.product-card {
-  height: auto;
-  min-width: 0;
-}
-
-/* FINAL PRODUCT IMAGE FIX — preserve original proportions */
-
-.product-card {
-  min-width: 0;
-  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: 12px;
 }
 
 .product-image-wrap {
   display: block;
-  width: 100%;
-  height: auto !important;
-  min-height: 0 !important;
-  max-height: none !important;
   flex: 0 0 auto;
+  width: 100%;
+  height: auto;
+  min-height: 0;
   overflow: hidden;
   line-height: 0;
   background: #fff;
@@ -1547,14 +1316,14 @@ div.product-image,
 
 .product-image-wrap img.product-image {
   display: block;
-  width: 100% !important;
-  height: auto !important;
-  min-height: 0 !important;
-  max-height: none !important;
-  aspect-ratio: auto !important;
-  object-fit: contain !important;
+  width: 100%;
+  height: auto;
+  min-height: 0;
+  max-height: none;
+  aspect-ratio: auto;
+  object-fit: contain;
   object-position: center;
-  transform: none !important;
+  transform: none;
   margin: 0;
   padding: 0;
 }
@@ -1566,56 +1335,185 @@ div.product-image,
   align-items: center;
   justify-content: center;
   padding: 20px;
-  color: #68788a;
+  color: var(--muted);
   font-size: 12px;
   line-height: 1.5;
   text-align: center;
 }
 
-/* Prevent card layout from stretching the image */
 .product-card-content {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
   min-width: 0;
-  flex: 1 1 auto;
+  padding: 14px;
 }
 
-@media (max-width: 650px) {
-  .product-image-wrap img.product-image {
-    width: 100% !important;
-    height: auto !important;
-  }
+.product-card-content .product-code {
+  margin: 0 0 8px;
+  font: 800 18px Manrope, sans-serif;
+  overflow-wrap: anywhere;
 }
 
-/* Align product card buttons without changing image proportions */
-.product-card {
-  display: flex;
-  flex-direction: column;
-  height: 100%;
+.product-card-content .product-name {
+  margin: 0 0 12px;
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.5;
 }
 
-.product-image-wrap {
-  flex: 0 0 auto;
-}
-
-.product-card-content {
-  display: flex;
-  flex-direction: column;
-  flex: 1 1 auto;
+.product-size-info,
+.product-pack-info {
+  margin: 0 0 12px;
+  font-size: 13px;
+  line-height: 1.5;
 }
 
 .size-order-inputs {
-  min-height: 156px;
   display: flex;
   flex-direction: column;
   gap: 8px;
+  margin-top: 2px;
 }
 
 .size-order-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 76px;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  min-width: 0;
   min-height: 44px;
-  flex: 0 0 44px;
+  box-sizing: border-box;
+  padding: 8px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #fbfcff;
+}
+
+.size-order-row label {
+  display: block;
+  min-width: 0;
+  margin: 0;
+  color: var(--ink);
+  font-size: 10px;
+  line-height: 1.3;
+  white-space: nowrap;
+  overflow-wrap: normal;
+  word-break: normal;
+}
+
+.size-order-row input {
+  display: block;
+  width: 100%;
+  min-width: 0;
+  height: 38px;
+  box-sizing: border-box;
+  padding: 7px 6px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: #fff;
+  color: var(--ink);
+  font: inherit;
+  font-size: 14px;
 }
 
 .add-cart-button {
-  margin-top: auto;
+  display: block;
   width: 100%;
-  flex-shrink: 0;
+  flex: 0 0 auto;
+  margin-top: auto;
+  padding: 12px 10px;
+  border: 0;
+  border-radius: 7px;
+  background: var(--blue);
+  color: #fff;
+  font: inherit;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.size-order-inputs + .add-cart-button {
+  margin-top: auto;
+}
+
+.add-cart-button:hover {
+  background: #1743c2;
+}
+
+@media (max-width: 900px) {
+  .product-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .product-card-content {
+    padding: 12px;
+  }
+
+  .size-order-row {
+    grid-template-columns: minmax(0, 1fr) 68px;
+    gap: 6px;
+    padding: 7px;
+  }
+}
+
+@media (max-width: 650px) {
+  .product-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+  }
+
+  .product-card-content {
+    padding: 9px;
+  }
+
+  .product-card-content .product-code {
+    font-size: 16px;
+  }
+
+  .product-size-info,
+  .product-pack-info {
+    font-size: 12px;
+  }
+
+  .size-order-row {
+    grid-template-columns: minmax(0, 1fr) 60px;
+    gap: 5px;
+    padding: 6px;
+  }
+
+  .size-order-row label {
+    font-size: 9px;
+  }
+
+  .size-order-row input {
+    height: 36px;
+    font-size: 13px;
+  }
+
+  .add-cart-button {
+    padding: 11px 6px;
+    font-size: 11px;
+  }
+}
+
+@media (max-width: 360px) {
+  .product-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .product-card-content {
+    padding: 12px;
+  }
+
+  .size-order-row {
+    grid-template-columns: minmax(0, 1fr) 76px;
+    gap: 8px;
+    padding: 8px;
+  }
+
+  .size-order-row label {
+    font-size: 10px;
+  }
 }
