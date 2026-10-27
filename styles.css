@@ -1525,3 +1525,62 @@ div.product-image,
   height: auto;
   min-width: 0;
 }
+
+/* FINAL PRODUCT IMAGE FIX — preserve original proportions */
+
+.product-card {
+  min-width: 0;
+  overflow: hidden;
+}
+
+.product-image-wrap {
+  display: block;
+  width: 100%;
+  height: auto !important;
+  min-height: 0 !important;
+  max-height: none !important;
+  flex: 0 0 auto;
+  overflow: hidden;
+  line-height: 0;
+  background: #fff;
+}
+
+.product-image-wrap img.product-image {
+  display: block;
+  width: 100% !important;
+  height: auto !important;
+  min-height: 0 !important;
+  max-height: none !important;
+  aspect-ratio: auto !important;
+  object-fit: contain !important;
+  object-position: center;
+  transform: none !important;
+  margin: 0;
+  padding: 0;
+}
+
+.product-image-fallback {
+  display: flex;
+  width: 100%;
+  min-height: 160px;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  color: #68788a;
+  font-size: 12px;
+  line-height: 1.5;
+  text-align: center;
+}
+
+/* Prevent card layout from stretching the image */
+.product-card-content {
+  min-width: 0;
+  flex: 1 1 auto;
+}
+
+@media (max-width: 650px) {
+  .product-image-wrap img.product-image {
+    width: 100% !important;
+    height: auto !important;
+  }
+}
