@@ -1290,7 +1290,7 @@ footer > a:last-child {
   }
 }
 
-/* Compact shopping cart */
+/* Compact shopping cart — one line per item on desktop */
 .cart-items {
   display: flex;
   flex-direction: column;
@@ -1302,71 +1302,69 @@ footer > a:last-child {
   grid-template-columns: minmax(0, 1fr) auto auto;
   align-items: center;
   gap: 12px;
-  padding: 12px 0;
+  padding: 8px 0;
   border-bottom: 1px solid #e2e8f0;
 }
 
 .cart-item-details {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 4px 12px;
   min-width: 0;
 }
 
 .cart-item-code {
-  display: block;
-  margin: 0 0 4px;
-  font-size: 15px;
-  line-height: 1.3;
+  font-size: 14px;
+  white-space: nowrap;
 }
 
 .cart-item-details p {
-  display: inline-block;
-  margin: 2px 12px 2px 0;
+  margin: 0;
   font-size: 12px;
-  line-height: 1.4;
+  white-space: nowrap;
 }
 
 .cart-item-quantity {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 6px;
   white-space: nowrap;
 }
 
-.cart-item-quantity label {
-  font-size: 12px;
-}
-
-.cart-item-quantity input {
-  width: 68px;
-  min-width: 0;
-  padding: 6px 8px;
-  font-size: 14px;
-}
-
+.cart-item-quantity label,
 .cart-item-quantity p {
   margin: 0;
   font-size: 12px;
   white-space: nowrap;
 }
 
+.cart-item-quantity input {
+  width: 55px;
+  min-width: 55px;
+  padding: 4px;
+  font-size: 13px;
+}
+
 .cart-remove-button {
-  padding: 6px 10px;
+  padding: 5px 8px;
   font-size: 12px;
+  white-space: nowrap;
 }
 
 .cart-summary {
-  margin-top: 16px;
+  margin-top: 12px;
 }
 
 .cart-actions {
-  margin-top: 14px;
+  margin-top: 10px;
 }
 
-/* Keep the cart usable on mobile */
-@media (max-width: 640px) {
+/* Mobile layout */
+@media (max-width: 850px) {
   .cart-item {
     grid-template-columns: minmax(0, 1fr) auto;
-    gap: 8px;
-    padding: 10px 0;
+    gap: 6px 10px;
   }
 
   .cart-item-details {
@@ -1374,15 +1372,13 @@ footer > a:last-child {
   }
 
   .cart-item-quantity {
-    justify-self: start;
+    grid-column: 1;
     flex-wrap: wrap;
   }
 
   .cart-remove-button {
+    grid-column: 2;
+    grid-row: 2;
     justify-self: end;
-  }
-
-  .cart-item-details p {
-    margin-right: 8px;
   }
 }
