@@ -1475,3 +1475,35 @@ footer > a:last-child {
     max-height: 150px !important;
   }
 }
+
+/* Align all Add to Cart buttons */
+.product-card-content {
+  display: flex !important;
+  flex-direction: column !important;
+  height: 100%;
+  box-sizing: border-box;
+}
+
+.size-order-inputs {
+  margin-top: auto !important;
+  min-height: 0;
+}
+
+/* Reserve consistent space for up to three size rows */
+.product-card-content:has(.size-order-row:nth-child(3)) .size-order-inputs {
+  min-height: 156px;
+}
+
+.product-card-content:has(.size-order-row:nth-child(2)):not(:has(.size-order-row:nth-child(3))) .size-order-inputs {
+  min-height: 104px;
+}
+
+.product-card-content:has(.size-order-row:nth-child(1)):not(:has(.size-order-row:nth-child(2))) .size-order-inputs {
+  min-height: 52px;
+}
+
+.add-cart-button {
+  margin-top: 10px !important;
+  width: 100% !important;
+  flex-shrink: 0;
+}
