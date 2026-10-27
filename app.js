@@ -1,391 +1,639 @@
 (() => {
   'use strict';
 
-  const $ = id => document.getElementById(id);
-  const productRoot = $('products');
-  const searchInput = $('search');
-  const categoryInput = $('category');
-  const sortInput = $('sort');
-  const count = $('resultCount');
-  const empty = $('empty');
+  // =========================================================
+  // RUN FIRST SANDALS — CATALOGUE AND SHOPPING CART
+  // =========================================================
 
-  const config = window.SITE_CONFIG || {};
-  const waNumber = String(config.whatsappNumber || '').replace(/\D/g, '');
-  const storageKey = 'runFirstShoppingCart';
+  const PRODUCTS = Array.isArray(window.PRODUCTS)
+    ? window.PRODUCTS
+    : [];
 
-  const translations = {
+  const CONFIG = window.SITE_CONFIG || {};
+
+  const BUSINESS_NAME = CONFIG.businessName || 'Run First Sandals';
+  const WHATSAPP_NUMBER = String(
+    CONFIG.whatsappNumber || '27822990061'
+  ).replace(/\D/g, '');
+
+  const CART_STORAGE_KEY = 'runFirstShoppingCart';
+  const LANGUAGE_STORAGE_KEY = 'runFirstLanguage';
+
+  const $ = (id) => document.getElementById(id);
+
+  let currentLanguage = 'en';
+  let cart = loadCart();
+
+  // =========================================================
+  // TRANSLATIONS
+  // =========================================================
+
+  const TEXT = {
     en: {
-      language: 'Language',
-      contact: 'Contact',
       home: 'Home',
-      catalogueNav: 'Catalogue',
-      howNav: 'How to order',
-      cartNav: 'Cart',
-      eyebrow: 'MADE FOR EVERYDAY COMFORT',
-      heroLine1: 'Find your',
-      heroLine2: 'next best-seller.',
-      heroText: 'Explore our footwear collection, choose your styles and send your wholesale order through WhatsApp.',
-      explore: 'Explore catalogue',
-      wholesale: 'Wholesale enquiries welcome',
-      collection: 'THE COLLECTION',
-      browse: 'Browse our styles',
-      sectionDescription: 'Search for a style and add cartons to your cart.',
-      searchPlaceholder: 'Search style code or name…',
-      searchLabel: 'Search styles',
-      allFootwear: 'All footwear',
-      sandals: 'Sandals',
-      slippers: 'Slippers',
-      other: 'Other',
-      sortCode: 'Sort: Style code',
-      sortName: 'Sort: Name',
-      style: 'style',
-      styles: 'styles',
-      inCatalogue: 'in catalogue',
-      noStyles: 'No styles found',
-      noStylesText: 'Try another search or clear your filters.',
-      sizes: 'Size range',
-      pack: 'Pairs per carton',
-      cartons: 'Cartons',
-      addCart: 'Add to cart',
-      added: 'Added to cart',
-      ready: 'READY TO ORDER?',
-      talk: "Let's talk footwear.",
-      contactText: 'Send us your selected styles through WhatsApp.',
-      whatsapp: 'Enquire on WhatsApp',
-      rights: 'All rights reserved.',
-      backToTop: 'Back to top',
-      photo: 'PRODUCT PHOTO',
-      footwear: 'Footwear',
-      howTitle: 'How to order',
-      guide1: 'Choose your styles',
-      guide1Text: "Browse the catalogue and check each style's size range.",
-      guide2: 'Add cartons',
-      guide2Text: 'Enter quantities and add styles to your cart.',
-      guide3: 'Review your order',
-      guide3Text: 'Check styles, carton quantities and total pairs.',
-      guide4: 'Send on WhatsApp',
-      guide4Text: 'Send your complete order for confirmation.',
-      yourOrder: 'YOUR ORDER',
+      catalogue: 'Catalogue',
+      howToOrder: 'How to order',
+      contact: 'Contact',
+      cart: 'Cart',
+      search: 'Search by product code...',
+      allCategories: 'All products',
+      sortCode: 'Sort by product code',
+      sortName: 'Sort by product name',
+      noProducts: 'No products found.',
+      sizes: 'Sizes',
+      pairsPerCarton: 'Pairs per carton',
+      carton: 'carton',
+      cartons: 'cartons',
+      quantity: 'Cartons',
+      addToCart: 'Add to cart',
+      addedToCart: 'Added to cart.',
+      enterQuantity: 'Please enter at least one carton quantity.',
       shoppingCart: 'Shopping cart',
-      cartIntro: 'Review your selected styles before sending your order.',
-      emptyCart: 'Your cart is empty. Browse the catalogue to add styles.',
+      emptyCart: 'Your cart is empty.',
+      product: 'Product',
+      size: 'Size',
+      pairs: 'Pairs',
+      subtotal: 'Total',
+      remove: 'Remove',
+      clearCart: 'Clear cart',
+      checkout: 'Order via WhatsApp',
       totalCartons: 'Total cartons',
       totalPairs: 'Total pairs',
-      clearCart: 'Clear cart',
-      checkout: 'Send order on WhatsApp',
-      cartNote: 'Prices are not calculated on this website. We will confirm pricing, availability and delivery with you.',
-      remove: 'Remove',
-      invalidQuantity: 'Please enter a carton quantity of at least 1.',
       confirmClear: 'Are you sure you want to clear your cart?',
-      checkoutEmpty: 'Please add at least one style to your cart first.',
-      checkoutIntro: 'Hello, I would like to place a wholesale footwear order.',
-      orderHeading: 'ORDER DETAILS',
-      orderStyle: 'Style',
-      orderSizes: 'Size range',
-      orderPack: 'Pairs per carton',
-      orderCartons: 'Cartons',
-      orderPairs: 'Pairs',
-      orderTotalCartons: 'TOTAL CARTONS',
-      orderTotalPairs: 'TOTAL PAIRS',
-      orderFooter: 'Please confirm prices, stock availability and delivery.',
-      orderNotice: 'Please review this order and press Send in WhatsApp to submit it.'
+      invalidQuantity: 'Please enter a valid carton quantity.',
+      orderMessage: 'Hello, I would like to place the following wholesale order:',
+      orderTitle: 'WHOLESALE ORDER',
+      thankYou: 'Thank you for your enquiry.',
+      contactWhatsApp: 'Contact us on WhatsApp',
+      missingPackSize: 'Carton quantity information is unavailable.',
+      howToOrderTitle: 'How to order',
+      howToOrderText:
+        'Choose your styles, enter the number of cartons for each size, review your cart, and send your order through WhatsApp.',
+      step1: '1. Browse the catalogue and select your styles.',
+      step2: '2. Enter the number of cartons required for each size.',
+      step3: '3. Review your cart and check the quantities.',
+      step4: '4. Send your order through WhatsApp.',
+      contactTitle: 'Contact us',
+      imageUnavailable: 'Image unavailable',
+      languageEnglish: 'English',
+      languageChinese: '简体中文',
+      continueShopping: 'Continue shopping',
+      pairsShort: 'pairs'
     },
+
     zh: {
-      language: '语言',
-      contact: '联系我们',
       home: '首页',
-      catalogueNav: '产品目录',
-      howNav: '订购方式',
-      cartNav: '购物车',
-      eyebrow: '舒适日常穿着',
-      heroLine1: '寻找您的',
-      heroLine2: '畅销新款。',
-      heroText: '浏览鞋类产品，选择款式和箱数，并通过 WhatsApp 发送批发订单。',
-      explore: '浏览产品目录',
-      wholesale: '欢迎批发咨询',
-      collection: '产品系列',
-      browse: '浏览我们的款式',
-      sectionDescription: '搜索款号并将整箱数量加入购物车。',
-      searchPlaceholder: '搜索款号或名称…',
-      searchLabel: '搜索款式',
-      allFootwear: '所有鞋类',
-      sandals: '凉鞋',
-      slippers: '拖鞋',
-      other: '其他',
-      sortCode: '按款号排序',
-      sortName: '按名称排序',
-      style: '款式',
-      styles: '款式',
-      inCatalogue: '个款式',
-      noStyles: '未找到款式',
-      noStylesText: '请尝试其他搜索内容或清除筛选条件。',
-      sizes: '尺码范围',
-      pack: '每箱双数',
-      cartons: '箱数',
-      addCart: '加入购物车',
-      added: '已加入购物车',
-      ready: '准备订购？',
-      talk: '欢迎洽谈鞋类订单。',
-      contactText: '通过 WhatsApp 发送您选择的款式。',
-      whatsapp: '通过 WhatsApp 咨询',
-      rights: '版权所有。',
-      backToTop: '返回顶部',
-      photo: '产品图片',
-      footwear: '鞋类',
-      howTitle: '订购方式',
-      guide1: '选择款式',
-      guide1Text: '浏览目录并查看每款产品的尺码范围。',
-      guide2: '添加箱数',
-      guide2Text: '输入箱数并加入购物车。',
-      guide3: '检查订单',
-      guide3Text: '检查款式、箱数和总双数。',
-      guide4: '通过 WhatsApp 发送',
-      guide4Text: '发送完整订单以便确认。',
-      yourOrder: '您的订单',
+      catalogue: '产品目录',
+      howToOrder: '订购方法',
+      contact: '联系我们',
+      cart: '购物车',
+      search: '搜索产品编号...',
+      allCategories: '所有产品',
+      sortCode: '按产品编号排序',
+      sortName: '按产品名称排序',
+      noProducts: '没有找到产品。',
+      sizes: '尺码',
+      pairsPerCarton: '每箱双数',
+      carton: '箱',
+      cartons: '箱',
+      quantity: '箱数',
+      addToCart: '加入购物车',
+      addedToCart: '已加入购物车。',
+      enterQuantity: '请输入至少一个产品的箱数。',
       shoppingCart: '购物车',
-      cartIntro: '发送订单前请检查您选择的款式。',
-      emptyCart: '购物车为空。请浏览目录并添加款式。',
+      emptyCart: '购物车是空的。',
+      product: '产品',
+      size: '尺码',
+      pairs: '双',
+      subtotal: '总计',
+      remove: '删除',
+      clearCart: '清空购物车',
+      checkout: '通过 WhatsApp 下单',
       totalCartons: '总箱数',
       totalPairs: '总双数',
-      clearCart: '清空购物车',
-      checkout: '通过 WhatsApp 发送订单',
-      cartNote: '本网站不计算价格。我们将与您确认价格、库存和送货。',
-      remove: '删除',
-      invalidQuantity: '请输入至少 1 箱。',
       confirmClear: '确定要清空购物车吗？',
-      checkoutEmpty: '请先将至少一个款式加入购物车。',
-      checkoutIntro: '您好，我想订购以下鞋类批发产品。',
-      orderHeading: '订单详情',
-      orderStyle: '款号',
-      orderSizes: '尺码范围',
-      orderPack: '每箱双数',
-      orderCartons: '箱数',
-      orderPairs: '双数',
-      orderTotalCartons: '总箱数',
-      orderTotalPairs: '总双数',
-      orderFooter: '请确认价格、库存和送货安排。',
-      orderNotice: '请检查订单，然后在 WhatsApp 中按发送提交。'
+      invalidQuantity: '请输入有效的箱数。',
+      orderMessage: '您好，我想订购以下批发产品：',
+      orderTitle: '批发订单',
+      thankYou: '感谢您的咨询。',
+      contactWhatsApp: '通过 WhatsApp 联系我们',
+      missingPackSize: '没有可用的每箱双数信息。',
+      howToOrderTitle: '订购方法',
+      howToOrderText:
+        '选择产品款式，输入每个尺码的箱数，检查购物车，然后通过 WhatsApp 发送订单。',
+      step1: '1. 浏览产品目录并选择款式。',
+      step2: '2. 输入每个尺码需要的箱数。',
+      step3: '3. 检查购物车和订购数量。',
+      step4: '4. 通过 WhatsApp 发送订单。',
+      contactTitle: '联系我们',
+      imageUnavailable: '图片无法显示',
+      languageEnglish: 'English',
+      languageChinese: '简体中文',
+      continueShopping: '继续购物',
+      pairsShort: '双'
     }
   };
 
-  const params = new URLSearchParams(window.location.search);
-  const requestedLanguage = params.get('lang');
-  let currentLanguage =
-    requestedLanguage === 'zh' || requestedLanguage === 'en'
-      ? requestedLanguage
-      : (localStorage.getItem('runFirstLanguage') || 'en');
-
-  if (!translations[currentLanguage]) currentLanguage = 'en';
-
-  const t = key => translations[currentLanguage][key] ||
-    translations.en[key] || key;
-
-  function escapeHtml(value = '') {
-    return String(value).replace(/[&<>"']/g, c => ({
-      '&': '&amp;',
-      '<': '&lt;',
-      '>': '&gt;',
-      '"': '&quot;',
-      "'": '&#39;'
-    })[c]);
+  function t(key) {
+    return TEXT[currentLanguage]?.[key] || TEXT.en[key] || key;
   }
 
-  function waLink(message) {
-    return waNumber
-      ? `https://wa.me/${waNumber}?text=${encodeURIComponent(message)}`
-      : `mailto:?subject=${encodeURIComponent('Wholesale footwear order')}&body=${encodeURIComponent(message)}`;
-  }
+  // =========================================================
+  // LANGUAGE
+  // =========================================================
 
-  function getProducts() {
-    return (window.PRODUCTS || []).map((p, index) => ({
-      ...p,
-      _id: String(p.code || `product-${index}`)
-    }));
-  }
+  function detectLanguage() {
+    const params = new URLSearchParams(window.location.search);
+    const urlLanguage = params.get('lang');
 
-  const products = getProducts();
-
-  let cart = loadCart();
-
-  function loadCart() {
-    try {
-      const saved = JSON.parse(localStorage.getItem(storageKey) || '{}');
-      return saved && typeof saved === 'object' && !Array.isArray(saved)
-        ? saved
-        : {};
-    } catch {
-      return {};
+    if (urlLanguage === 'zh' || urlLanguage === 'en') {
+      return urlLanguage;
     }
-  }
 
-  function saveCart() {
     try {
-      localStorage.setItem(storageKey, JSON.stringify(cart));
+      const saved = localStorage.getItem(LANGUAGE_STORAGE_KEY);
+
+      if (saved === 'zh' || saved === 'en') {
+        return saved;
+      }
     } catch (error) {
-      console.warn('Could not save cart.', error);
+      // Continue using English if localStorage is unavailable.
     }
+
+    return 'en';
   }
 
-  function findProduct(id) {
-    return products.find(p => p._id === id);
+  function setLanguage(language) {
+    currentLanguage = language === 'zh' ? 'zh' : 'en';
+
+    try {
+      localStorage.setItem(LANGUAGE_STORAGE_KEY, currentLanguage);
+    } catch (error) {
+      // The page can still work without localStorage.
+    }
+
+    document.documentElement.lang =
+      currentLanguage === 'zh' ? 'zh-CN' : 'en';
+
+    const languageSelector =
+      $('languageSelect') ||
+      $('langSelect') ||
+      $('language');
+
+    if (languageSelector) {
+      languageSelector.value = currentLanguage;
+    }
+
+    applyLanguage();
+    renderProducts();
+    renderCart();
   }
 
+  function applyLanguage() {
+    document.querySelectorAll('[data-i18n]').forEach((element) => {
+      const key = element.getAttribute('data-i18n');
+
+      if (TEXT[currentLanguage][key]) {
+        element.textContent = t(key);
+      }
+    });
+
+    document.querySelectorAll('[data-i18n-placeholder]').forEach((element) => {
+      const key = element.getAttribute('data-i18n-placeholder');
+
+      if (TEXT[currentLanguage][key]) {
+        element.setAttribute('placeholder', t(key));
+      }
+    });
+
+    const searchInput =
+      $('productSearch') ||
+      $('searchInput') ||
+      $('searchProducts');
+
+    if (searchInput) {
+      searchInput.placeholder = t('search');
+    }
+
+    const howToOrderTitle = $('howToOrderTitle');
+
+    if (howToOrderTitle) {
+      howToOrderTitle.textContent = t('howToOrderTitle');
+    }
+
+    const howToOrderText = $('howToOrderText');
+
+    if (howToOrderText) {
+      howToOrderText.textContent = t('howToOrderText');
+    }
+
+    const contactTitle = $('contactTitle');
+
+    if (contactTitle) {
+      contactTitle.textContent = t('contactTitle');
+    }
+
+    updateCartNavigation();
+  }
+
+  // =========================================================
+  // PRODUCT INFORMATION
+  // =========================================================
+
+  function productCode(product) {
+    return String(
+      product.code ??
+      product._id ??
+      product.stockCode ??
+      ''
+    );
+  }
+
+  function productName(product) {
+    return String(
+      product.name ||
+      product.description ||
+      productCode(product)
+    );
+  }
+
+  function productSizes(product) {
+    return String(product.sizes || '').trim();
+  }
+
+  // FIX: "20 pairs" becomes 20, and "36 pairs" becomes 36.
   function packSize(product) {
-    const n = Number(product.pairsPerCarton);
-    return Number.isFinite(n) && n > 0 ? Math.floor(n) : 0;
-  }
-
-  function number(value) {
-    return new Intl.NumberFormat(
-      currentLanguage === 'zh' ? 'zh-CN' : 'en-ZA'
-    ).format(value);
-  }
-
-  /*
-   * Split size ranges.
-   * Examples:
-   * 6637L with "6-11" => one L range.
-   * 6638s/m with "10-2 3-8" => S and M.
-   * 6631S/M/L with "10-2 3-8 6-11" => S, M and L.
-   *
-   * The size ranges must come from the product's size description.
-   * Do not invent missing ranges.
-   */
-  function getSizeOptions(product) {
-    const code = String(product.code || '').trim();
-    const sizesText = String(product.sizes || '').trim();
-
-    const letters = [];
-    const suffix = code.match(/([sml](?:\s*\/\s*[sml])+)$/i);
-
-    if (suffix) {
-      suffix[1].split('/').forEach(part => {
-        const letter = part.trim().toUpperCase();
-        if (['S', 'M', 'L'].includes(letter) && !letters.includes(letter)) {
-          letters.push(letter);
-        }
-      });
-    } else {
-      const single = code.match(/([sml])$/i);
-      if (single) letters.push(single[1].toUpperCase());
-    }
-
-    const ranges = sizesText.match(/\d{1,2}\s*[-–]\s*\d{1,2}/g) || [];
-    const cleanRanges = ranges.map(range =>
-      range.replace(/\s+/g, '').replace('–', '-')
+    const value = String(
+      product.pairsPerCarton || ''
     );
 
-    // If no S/M/L suffix is present, treat the product as one size range.
-    if (!letters.length) {
+    const match = value.match(/\d+/);
+
+    return match ? Number(match[0]) : 0;
+  }
+
+  function formatNumber(value) {
+    return Number(value || 0).toLocaleString(
+      currentLanguage === 'zh' ? 'zh-CN' : 'en-ZA'
+    );
+  }
+
+  function escapeHTML(value) {
+    return String(value ?? '').replace(/[&<>"']/g, (character) => {
+      const entities = {
+        '&': '&amp;',
+        '<': '&lt;',
+        '>': '&gt;',
+        '"': '&quot;',
+        "'": '&#39;'
+      };
+
+      return entities[character];
+    });
+  }
+
+  function imagePath(product) {
+    return String(
+      product.image ||
+      product.imageUrl ||
+      product.photo ||
+      ''
+    );
+  }
+
+  // =========================================================
+  // SIZE OPTIONS
+  //
+  // Examples:
+  // 6637L       -> one input: 6–11
+  // 6638s/m     -> S: 10–2, M: 3–8
+  // 6631s/m/L   -> S: 10–2, M: 3–8, L: 6–11
+  //
+  // Only the size ranges listed for the product are displayed.
+  // =========================================================
+
+  function getSizeOptions(product) {
+    const code = productCode(product);
+    const sizesText = productSizes(product);
+
+    const ranges = sizesText.match(
+      /\d{1,2}\s*[-–—]\s*\d{1,2}/g
+    ) || [];
+
+    const cleanedRanges = ranges.map((range) =>
+      range.replace(/\s+/g, '').replace(/—/g, '–')
+    );
+
+    const suffixMatch = code.match(
+      /([sml](?:\s*\/\s*[sml])+)$/i
+    );
+
+    let letters = [];
+
+    if (suffixMatch) {
+      letters = suffixMatch[1]
+        .split('/')
+        .map((letter) => letter.trim().toUpperCase());
+    } else {
+      const singleMatch = code.match(/([sml])$/i);
+
+      if (singleMatch) {
+        letters = [singleMatch[1].toUpperCase()];
+      }
+    }
+
+    if (letters.length > 0) {
+      return letters.map((letter, index) => ({
+        key: `${letter}-${index}`,
+        label: cleanedRanges[index]
+          ? `${letter} (${cleanedRanges[index]})`
+          : letter,
+        size: cleanedRanges[index] || letter
+      }));
+    }
+
+    if (cleanedRanges.length > 0) {
+      return cleanedRanges.map((range, index) => ({
+        key: `size-${index}`,
+        label: range,
+        size: range
+      }));
+    }
+
+    if (sizesText) {
       return [{
         key: 'default',
-        label: sizesText || '—',
-        pairs: packSize(product)
+        label: sizesText,
+        size: sizesText
       }];
     }
 
-    // For a single-size style such as 6637L, keep one box only.
-    if (letters.length === 1) {
-      return [{
-        key: letters[0],
-        label: cleanRanges[0] || sizesText || '—',
-        pairs: packSize(product)
-      }];
+    return [{
+      key: 'default',
+      label: currentLanguage === 'zh' ? '标准尺码' : 'Standard size',
+      size: currentLanguage === 'zh' ? '标准尺码' : 'Standard size'
+    }];
+  }
+
+  // =========================================================
+  // PRODUCT FILTERS
+  // =========================================================
+
+  function getSearchInput() {
+    return (
+      $('productSearch') ||
+      $('searchInput') ||
+      $('searchProducts')
+    );
+  }
+
+  function getCategorySelect() {
+    return (
+      $('categoryFilter') ||
+      $('categorySelect') ||
+      $('productCategory')
+    );
+  }
+
+  function getSortSelect() {
+    return (
+      $('sortBy') ||
+      $('sortSelect') ||
+      $('productSort')
+    );
+  }
+
+  function getProductContainer() {
+    return (
+      $('productsGrid') ||
+      $('productGrid') ||
+      $('catalogueGrid') ||
+      $('products')
+    );
+  }
+
+  function filteredProducts() {
+    const searchInput = getSearchInput();
+    const categorySelect = getCategorySelect();
+    const sortSelect = getSortSelect();
+
+    const search = searchInput
+      ? searchInput.value.trim().toLowerCase()
+      : '';
+
+    const category = categorySelect
+      ? categorySelect.value.trim().toLowerCase()
+      : 'all';
+
+    let results = PRODUCTS.filter((product) => {
+      const searchable = [
+        productCode(product),
+        productName(product),
+        product.category || '',
+        productSizes(product),
+        product.pairsPerCarton || ''
+      ].join(' ').toLowerCase();
+
+      const matchesSearch = !search || searchable.includes(search);
+
+      const actualCategory = String(
+        product.category || ''
+      ).trim().toLowerCase();
+
+      const matchesCategory =
+        !category ||
+        category === 'all' ||
+        category === 'all products' ||
+        actualCategory === category;
+
+      return matchesSearch && matchesCategory;
+    });
+
+    // If the current product database only contains "Footwear",
+    // avoid displaying an empty catalogue for unsupported categories.
+    if (
+      results.length === 0 &&
+      category &&
+      category !== 'all' &&
+      category !== 'all products'
+    ) {
+      const categoryMatchesExist = PRODUCTS.some((product) => {
+        return String(product.category || '')
+          .trim()
+          .toLowerCase() === category;
+      });
+
+      if (!categoryMatchesExist) {
+        results = PRODUCTS.filter((product) => {
+          const searchable = [
+            productCode(product),
+            productName(product),
+            product.category || '',
+            productSizes(product),
+            product.pairsPerCarton || ''
+          ].join(' ').toLowerCase();
+
+          return !search || searchable.includes(search);
+        });
+      }
     }
 
-    // For mixed-size styles, pair the description's ranges with S, M, L
-    // in the order they are written in the product description.
-    return letters.map((letter, index) => ({
-      key: letter,
-      label: cleanRanges[index] || '',
-      pairs: packSize(product)
-    }));
+    const sortValue = sortSelect ? sortSelect.value : 'code';
+
+    if (
+      sortValue === 'name' ||
+      sortValue === 'name-asc' ||
+      sortValue === 'nameAsc'
+    ) {
+      results.sort((a, b) =>
+        productName(a).localeCompare(productName(b))
+      );
+    } else if (
+      sortValue === 'name-desc' ||
+      sortValue === 'nameDesc'
+    ) {
+      results.sort((a, b) =>
+        productName(b).localeCompare(productName(a))
+      );
+    } else if (sortValue === 'code-desc') {
+      results.sort((a, b) =>
+        productCode(b).localeCompare(productCode(a), undefined, {
+          numeric: true
+        })
+      );
+    } else {
+      results.sort((a, b) =>
+        productCode(a).localeCompare(productCode(b), undefined, {
+          numeric: true
+        })
+      );
+    }
+
+    return results;
   }
 
-  function cartKey(product, option) {
-    return `${product._id}::${option.key}`;
-  }
+  // =========================================================
+  // RENDER PRODUCTS
+  // =========================================================
 
-  function getCartRows() {
-    return Object.entries(cart).map(([key, quantity]) => {
-      const [productId, optionKey] = key.split('::');
-      const product = findProduct(productId);
+  function renderProducts() {
+    const container = getProductContainer();
 
-      if (!product) return null;
+    if (!container) {
+      console.error(
+        'Product grid not found. Check the product grid ID in index.html.'
+      );
+      return;
+    }
 
-      const option = getSizeOptions(product)
-        .find(item => item.key === optionKey);
+    const products = filteredProducts();
 
-      if (!option) return null;
+    if (products.length === 0) {
+      container.innerHTML = `
+        <p class="no-products">
+          ${escapeHTML(t('noProducts'))}
+        </p>
+      `;
+      updateProductCount(0);
+      return;
+    }
 
-      const qty = Number(quantity);
-      if (!Number.isSafeInteger(qty) || qty < 1) return null;
-
-      return { key, product, option, quantity: qty };
-    }).filter(Boolean);
-  }
-
-  function render() {
-    const term = searchInput.value.trim().toLowerCase();
-
-    let items = products.filter(p =>
-      (categoryInput.value === 'all' || p.category === categoryInput.value) &&
-      [p.code, p.name, p.category, p.sizes].join(' ').toLowerCase().includes(term)
-    );
-
-    items.sort((a, b) =>
-      sortInput.value === 'name'
-        ? String(a.name || '').localeCompare(String(b.name || ''))
-        : String(a.code || '').localeCompare(String(b.code || ''), undefined, { numeric: true })
-    );
-
-    count.textContent =
-      `${items.length} ${items.length === 1 ? t('style') : t('styles')} ${t('inCatalogue')}`;
-
-    empty.hidden = items.length !== 0;
-
-    productRoot.innerHTML = items.map(product => {
+    container.innerHTML = products.map((product, index) => {
+      const code = productCode(product);
+      const name = productName(product);
+      const sizes = productSizes(product);
+      const pairs = packSize(product);
+      const image = imagePath(product);
       const options = getSizeOptions(product);
-      const id = escapeHtml(product._id);
-      const code = escapeHtml(product.code || '');
-      const name = escapeHtml(product.name || '');
-      const image = product.image
-        ? `<img src="${escapeHtml(product.image)}" alt="${name || code}" loading="lazy">`
-        : `<div class="image-placeholder"><strong>${code}</strong><span>${escapeHtml(t('photo'))}</span></div>`;
 
-      const sizeInputs = options.map(option => `
-        <div class="size-order-row">
-          <label for="qty-${id}-${escapeHtml(option.key)}">
-            ${options.length > 1 ? `<strong>${escapeHtml(option.key)}</strong> · ` : ''}
-            ${escapeHtml(option.label || 'Size range not specified')}
-          </label>
-          <input
-            id="qty-${id}-${escapeHtml(option.key)}"
-            type="number"
-            min="0"
-            step="1"
-            value="0"
-            inputmode="numeric"
-            data-size-quantity="${id}"
-            data-size-key="${escapeHtml(option.key)}"
-            aria-label="${code} ${escapeHtml(option.key)} ${escapeHtml(t('cartons'))}"
+      const safeCode = escapeHTML(code);
+      const safeName = escapeHTML(name);
+      const safeSizes = escapeHTML(sizes);
+      const safeImage = escapeHTML(image);
+
+      const sizeInputs = options.map((option) => {
+        const optionKey = escapeHTML(option.key);
+        const optionLabel = escapeHTML(option.label);
+
+        return `
+          <div class="size-order-row">
+            <label
+              for="qty-${index}-${optionKey}"
+              class="size-order-label"
+            >
+              ${optionLabel}
+            </label>
+
+            <input
+              id="qty-${index}-${optionKey}"
+              class="cart-quantity-input"
+              type="number"
+              min="0"
+              step="1"
+              value="0"
+              inputmode="numeric"
+              data-product-code="${safeCode}"
+              data-size-key="${optionKey}"
+              aria-label="${escapeHTML(t('quantity'))} ${optionLabel}"
+            />
+          </div>
+        `;
+      }).join('');
+
+      const imageHTML = image
+        ? `
+          <img
+            class="product-image"
+            src="${safeImage}"
+            alt="${safeName}"
+            loading="lazy"
+            onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
           >
-        </div>
-      `).join('');
+          <div
+            class="product-image-fallback"
+            style="display:none;"
+          >
+            ${escapeHTML(t('imageUnavailable'))}
+          </div>
+        `
+        : `
+          <div class="product-image-fallback">
+            ${escapeHTML(t('imageUnavailable'))}
+          </div>
+        `;
 
       return `
-        <article class="product-card">
-          <div class="product-image">${image}</div>
-          <div class="product-info">
-            <div class="product-meta">
-              <span class="product-code">${code}</span>
-              <span class="product-tag">${escapeHtml(t('footwear'))}</span>
-            </div>
+        <article
+          class="product-card"
+          data-product-code="${safeCode}"
+        >
+          <div class="product-image-wrap">
+            ${imageHTML}
+          </div>
 
-            <p class="product-name">
-              ${name}
-              ${product.sizes ? `<br><strong>${escapeHtml(t('sizes'))}:</strong> ${escapeHtml(product.sizes)}` : ''}
-              ${product.pairsPerCarton ? `<br><strong>${escapeHtml(t('pack'))}:</strong> ${number(packSize(product))}` : ''}
+          <div class="product-card-content">
+            <h3 class="product-code">${safeCode}</h3>
+
+            ${
+              name !== code
+                ? `<p class="product-name">${safeName}</p>`
+                : ''
+            }
+
+            ${
+              sizes
+                ? `
+                  <p class="product-size-info">
+                    <strong>${escapeHTML(t('sizes'))}:</strong>
+                    ${safeSizes}
+                  </p>
+                `
+                : ''
+            }
+
+            <p class="product-pack-info">
+              <strong>${escapeHTML(t('pairsPerCarton'))}:</strong>
+              ${pairs > 0 ? formatNumber(pairs) : '—'}
             </p>
 
             <div class="size-order-inputs">
@@ -393,324 +641,573 @@
             </div>
 
             <button
-              class="add-cart-button"
               type="button"
-              data-add-cart="${id}"
-            >${escapeHtml(t('addCart'))} +</button>
+              class="add-cart-button"
+              data-add-product="${safeCode}"
+            >
+              ${escapeHTML(t('addToCart'))}
+            </button>
           </div>
         </article>
       `;
     }).join('');
 
-    renderCart();
+    container.querySelectorAll('[data-add-product]').forEach((button) => {
+      button.addEventListener('click', () => {
+        addProductToCart(button.dataset.addProduct, button);
+      });
+    });
+
+    updateProductCount(products.length);
   }
 
-  function renderCart() {
-    const rows = getCartRows();
-    const cartItems = $('cartItems');
+  function updateProductCount(count) {
+    const counter =
+      $('productCount') ||
+      $('catalogueCount') ||
+      $('resultsCount');
 
-    let cartons = 0;
-    let pairs = 0;
+    if (counter) {
+      counter.textContent = formatNumber(count);
+    }
+  }
 
-    if (!rows.length) {
-      cartItems.innerHTML =
-        `<div class="cart-empty">${escapeHtml(t('emptyCart'))}</div>`;
-    } else {
-      cartItems.innerHTML = rows.map(row => {
-        const rowPairs = row.quantity * row.option.pairs;
-        cartons += row.quantity;
-        pairs += rowPairs;
+  // =========================================================
+  // CART STORAGE
+  // =========================================================
 
-        return `
-          <article class="cart-row">
-            <div class="cart-row-main">
-              <strong>${escapeHtml(row.product.code || '')}</strong>
-              <span>${escapeHtml(row.product.name || '')}</span>
-              <small>${escapeHtml(t('sizes'))}: ${escapeHtml(row.option.key === 'default' ? row.option.label : `${row.option.key} (${row.option.label || 'size range not specified'})`)}</small>
-              <small>${escapeHtml(t('pack'))}: ${number(row.option.pairs)}</small>
-            </div>
+  function loadCart() {
+    try {
+      const stored = localStorage.getItem(CART_STORAGE_KEY);
 
-            <div class="cart-row-quantity">
-              <label>${escapeHtml(t('cartons'))}</label>
-              <input
-                type="number"
-                min="1"
-                step="1"
-                value="${row.quantity}"
-                data-cart-quantity="${escapeHtml(row.key)}"
-                aria-label="${escapeHtml(t('cartons'))}"
-              >
-              <button type="button" class="remove-cart-button" data-remove-cart="${escapeHtml(row.key)}">${escapeHtml(t('remove'))}</button>
-            </div>
+      if (!stored) {
+        return [];
+      }
 
-            <div class="cart-row-pairs">
-              <span>${escapeHtml(t('orderPairs'))}</span>
-              <strong>${number(rowPairs)}</strong>
-            </div>
-          </article>
-        `;
-      }).join('');
+      const parsed = JSON.parse(stored);
+
+      if (!Array.isArray(parsed)) {
+        return [];
+      }
+
+      return parsed.filter((item) => {
+        return (
+          item &&
+          typeof item.code === 'string' &&
+          typeof item.sizeKey === 'string' &&
+          Number(item.cartons) > 0
+        );
+      });
+    } catch (error) {
+      console.warn('Could not load shopping cart:', error);
+      return [];
+    }
+  }
+
+  function saveCart() {
+    try {
+      localStorage.setItem(
+        CART_STORAGE_KEY,
+        JSON.stringify(cart)
+      );
+    } catch (error) {
+      console.warn('Could not save shopping cart:', error);
+    }
+  }
+
+  function findProduct(code) {
+    return PRODUCTS.find(
+      (product) => productCode(product) === String(code)
+    );
+  }
+
+  function findSizeOption(product, sizeKey) {
+    return getSizeOptions(product).find(
+      (option) => option.key === sizeKey
+    );
+  }
+
+  // =========================================================
+  // ADD TO CART
+  // =========================================================
+
+  function addProductToCart(code, button) {
+    const product = findProduct(code);
+
+    if (!product) {
+      alert('Product not found: ' + code);
+      return;
     }
 
-    $('cartTotalCartons').textContent = number(cartons);
-    $('cartTotalPairs').textContent = number(pairs);
-    $('cartCount').textContent = number(cartons);
-    $('navCartCount').textContent = number(cartons);
-  }
-
-  function addToCart(productId) {
-    const product = findProduct(productId);
-    if (!product) return;
-
     const options = getSizeOptions(product);
-    let added = false;
+    let addedSomething = false;
 
-    options.forEach(option => {
-      const input = $(`qty-${productId}-${option.key}`);
-      const quantity = Number(input?.value || 0);
+    for (const option of options) {
+      const inputId =
+        `qty-${getProductIndex(code)}-${option.key}`;
 
-      if (!Number.isSafeInteger(quantity) || quantity < 0) {
+      const input = $(inputId);
+
+      if (!input) {
+        continue;
+      }
+
+      const rawValue = input.value.trim();
+
+      if (rawValue === '') {
+        continue;
+      }
+
+      const cartons = Number(rawValue);
+
+      if (
+        !Number.isFinite(cartons) ||
+        cartons < 0 ||
+        !Number.isInteger(cartons)
+      ) {
+        alert(t('invalidQuantity'));
+        input.focus();
         return;
       }
 
-      if (quantity > 0) {
-        const key = cartKey(product, option);
-        cart[key] = Number(cart[key] || 0) + quantity;
-        added = true;
-        input.value = '0';
+      if (cartons === 0) {
+        continue;
       }
-    });
 
-    if (!added) {
-      alert('Enter at least 1 carton in one of the size boxes.');
+      const existing = cart.find((item) => {
+        return (
+          item.code === String(code) &&
+          item.sizeKey === option.key
+        );
+      });
+
+      if (existing) {
+        existing.cartons += cartons;
+      } else {
+        cart.push({
+          code: String(code),
+          sizeKey: option.key,
+          size: option.size,
+          sizeLabel: option.label,
+          cartons
+        });
+      }
+
+      addedSomething = true;
+    }
+
+    if (!addedSomething) {
+      alert(t('enterQuantity'));
       return;
     }
 
     saveCart();
     renderCart();
+
+    // Reset the inputs for this product after adding it.
+    options.forEach((option) => {
+      const input = $(
+        `qty-${getProductIndex(code)}-${option.key}`
+      );
+
+      if (input) {
+        input.value = '0';
+      }
+    });
+
+    if (button) {
+      const originalText = button.textContent;
+
+      button.textContent = t('addedToCart');
+
+      window.setTimeout(() => {
+        button.textContent = t('addToCart');
+      }, 1400);
+    }
   }
 
-  function updateCartQuantity(key, value) {
-    const quantity = Number(value);
+  function getProductIndex(code) {
+    return PRODUCTS.findIndex(
+      (product) => productCode(product) === String(code)
+    );
+  }
 
-    if (!Number.isSafeInteger(quantity) || quantity < 1) {
+  // =========================================================
+  // CART CALCULATIONS
+  // =========================================================
+
+  function cartTotals() {
+    let totalCartons = 0;
+    let totalPairs = 0;
+
+    cart.forEach((item) => {
+      const product = findProduct(item.code);
+
+      if (!product) {
+        return;
+      }
+
+      const cartons = Number(item.cartons) || 0;
+      const pairsPerCarton = packSize(product);
+
+      totalCartons += cartons;
+      totalPairs += cartons * pairsPerCarton;
+    });
+
+    return {
+      totalCartons,
+      totalPairs
+    };
+  }
+
+  // =========================================================
+  // RENDER CART
+  // =========================================================
+
+  function renderCart() {
+    const container = $('cartItems');
+
+    const validCart = cart.filter((item) => {
+      return findProduct(item.code);
+    });
+
+    if (validCart.length !== cart.length) {
+      cart = validCart;
+      saveCart();
+    }
+
+    if (container) {
+      if (cart.length === 0) {
+        container.innerHTML = `
+          <p class="empty-cart">
+            ${escapeHTML(t('emptyCart'))}
+          </p>
+        `;
+      } else {
+        container.innerHTML = cart.map((item, index) => {
+          const product = findProduct(item.code);
+
+          if (!product) {
+            return '';
+          }
+
+          const pairsPerCarton = packSize(product);
+          const cartons = Number(item.cartons) || 0;
+          const pairs = cartons * pairsPerCarton;
+
+          const code = escapeHTML(item.code);
+          const sizeLabel = escapeHTML(
+            item.sizeLabel || item.size || ''
+          );
+
+          return `
+            <div class="cart-item" data-cart-index="${index}">
+              <div class="cart-item-details">
+                <strong class="cart-item-code">${code}</strong>
+
+                <p>
+                  ${escapeHTML(t('size'))}:
+                  ${sizeLabel}
+                </p>
+
+                <p>
+                  ${escapeHTML(t('pairsPerCarton'))}:
+                  ${formatNumber(pairsPerCarton)}
+                </p>
+              </div>
+
+              <div class="cart-item-quantity">
+                <label for="cart-qty-${index}">
+                  ${escapeHTML(t('quantity'))}
+                </label>
+
+                <input
+                  id="cart-qty-${index}"
+                  class="cart-update-quantity"
+                  type="number"
+                  min="1"
+                  step="1"
+                  value="${cartons}"
+                  data-cart-update="${index}"
+                >
+
+                <p>
+                  ${formatNumber(pairs)}
+                  ${escapeHTML(t('pairs'))}
+                </p>
+              </div>
+
+              <button
+                type="button"
+                class="cart-remove-button"
+                data-cart-remove="${index}"
+              >
+                ${escapeHTML(t('remove'))}
+              </button>
+            </div>
+          `;
+        }).join('');
+
+        container.querySelectorAll('[data-cart-update]').forEach((input) => {
+          input.addEventListener('change', () => {
+            updateCartQuantity(
+              Number(input.dataset.cartUpdate),
+              input.value
+            );
+          });
+        });
+
+        container.querySelectorAll('[data-cart-remove]').forEach((button) => {
+          button.addEventListener('click', () => {
+            removeCartItem(Number(button.dataset.cartRemove));
+          });
+        });
+      }
+    }
+
+    const totals = cartTotals();
+
+    if ($('cartCount')) {
+      $('cartCount').textContent = formatNumber(
+        cart.reduce((sum, item) => sum + (Number(item.cartons) || 0), 0)
+      );
+    }
+
+    if ($('cartTotalCartons')) {
+      $('cartTotalCartons').textContent = formatNumber(
+        totals.totalCartons
+      );
+    }
+
+    if ($('cartTotalPairs')) {
+      $('cartTotalPairs').textContent = formatNumber(
+        totals.totalPairs
+      );
+    }
+
+    updateCartNavigation();
+    updateCheckoutButton();
+  }
+
+  function updateCartNavigation() {
+    const totalCartons = cart.reduce(
+      (sum, item) => sum + (Number(item.cartons) || 0),
+      0
+    );
+
+    const navCounter = $('navCartCount');
+
+    if (navCounter) {
+      navCounter.textContent = `${t('cart')} (${totalCartons})`;
+    }
+
+    const cartLink = $('cartLink');
+
+    if (cartLink) {
+      cartLink.textContent = `${t('cart')} (${totalCartons})`;
+    }
+  }
+
+  function updateCheckoutButton() {
+    const button = $('checkoutButton');
+
+    if (button) {
+      button.disabled = cart.length === 0;
+    }
+  }
+
+  // =========================================================
+  // UPDATE AND REMOVE CART ITEMS
+  // =========================================================
+
+  function updateCartQuantity(index, value) {
+    if (!cart[index]) {
+      return;
+    }
+
+    const cartons = Number(value);
+
+    if (
+      !Number.isFinite(cartons) ||
+      !Number.isInteger(cartons) ||
+      cartons < 1
+    ) {
       alert(t('invalidQuantity'));
       renderCart();
       return;
     }
 
-    cart[key] = quantity;
+    cart[index].cartons = cartons;
+
     saveCart();
     renderCart();
   }
 
-  function removeFromCart(key) {
-    delete cart[key];
+  function removeCartItem(index) {
+    if (index < 0 || index >= cart.length) {
+      return;
+    }
+
+    cart.splice(index, 1);
+
     saveCart();
     renderCart();
   }
 
   function clearCart() {
-    if (!getCartRows().length) return;
-    if (!confirm(t('confirmClear'))) return;
+    if (cart.length === 0) {
+      return;
+    }
 
-    cart = {};
+    if (!window.confirm(t('confirmClear'))) {
+      return;
+    }
+
+    cart = [];
+
     saveCart();
     renderCart();
   }
 
-  function checkout() {
-    const rows = getCartRows();
+  // =========================================================
+  // WHATSAPP CHECKOUT
+  // =========================================================
 
-    if (!rows.length) {
-      alert(t('checkoutEmpty'));
+  function checkoutWhatsApp() {
+    if (cart.length === 0) {
+      alert(t('emptyCart'));
       return;
     }
 
-    let totalCartons = 0;
-    let totalPairs = 0;
+    if (!WHATSAPP_NUMBER) {
+      alert('WhatsApp number is missing.');
+      return;
+    }
+
+    const totals = cartTotals();
 
     const lines = [
-      t('checkoutIntro'),
+      `${BUSINESS_NAME} — ${t('orderTitle')}`,
       '',
-      '--- ' + t('orderHeading') + ' ---',
+      t('orderMessage'),
       ''
     ];
 
-    rows.forEach(row => {
-      const rowPairs = row.quantity * row.option.pairs;
-      totalCartons += row.quantity;
-      totalPairs += rowPairs;
+    cart.forEach((item, index) => {
+      const product = findProduct(item.code);
 
-      const sizeDescription = row.option.key === 'default'
-        ? row.option.label
-        : `${row.option.key} (${row.option.label || 'size range not specified'})`;
+      if (!product) {
+        return;
+      }
+
+      const pairsPerCarton = packSize(product);
+      const cartons = Number(item.cartons) || 0;
+      const pairs = cartons * pairsPerCarton;
 
       lines.push(
-        `${t('orderStyle')}: ${row.product.code || ''}`,
-        `${t('orderSizes')}: ${sizeDescription}`,
-        `${t('orderPack')}: ${row.option.pairs}`,
-        `${t('orderCartons')}: ${row.quantity}`,
-        `${t('orderPairs')}: ${rowPairs}`,
-        ''
+        `${index + 1}. ${productCode(product)}`
       );
+
+      lines.push(
+        `   ${t('size')}: ${item.sizeLabel || item.size}`
+      );
+
+      lines.push(
+        `   ${t('quantity')}: ${cartons} ${t('cartons')}`
+      );
+
+      lines.push(
+        `   ${t('pairsPerCarton')}: ${pairsPerCarton}`
+      );
+
+      lines.push(
+        `   ${t('pairs')}: ${pairs}`
+      );
+
+      lines.push('');
     });
 
+    lines.push('------------------------');
     lines.push(
-      '-------------------------',
-      `${t('orderTotalCartons')}: ${totalCartons}`,
-      `${t('orderTotalPairs')}: ${totalPairs}`,
-      '',
-      t('orderFooter'),
-      '',
-      t('orderNotice')
+      `${t('totalCartons')}: ${totals.totalCartons}`
     );
+    lines.push(
+      `${t('totalPairs')}: ${totals.totalPairs}`
+    );
+    lines.push('');
+    lines.push(t('thankYou'));
 
-    const url = waNumber
-      ? `https://wa.me/${waNumber}?text=${encodeURIComponent(lines.join('\n'))}`
-      : `mailto:?subject=${encodeURIComponent('Wholesale footwear order')}&body=${encodeURIComponent(lines.join('\n'))}`;
+    const message = lines.join('\n');
 
-    window.open(url, '_blank', 'noopener,noreferrer');
+    const whatsappURL =
+      `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
+
+    window.open(whatsappURL, '_blank', 'noopener,noreferrer');
   }
 
-  function applyLanguage() {
-    const tr = translations[currentLanguage];
+  // =========================================================
+  // EVENT LISTENERS
+  // =========================================================
 
-    document.documentElement.lang = currentLanguage === 'zh' ? 'zh-CN' : 'en';
+  function setupEventListeners() {
+    const languageSelector =
+      $('languageSelect') ||
+      $('langSelect') ||
+      $('language');
 
-    const text = (selector, value) => {
-      const element = document.querySelector(selector);
-      if (element) element.textContent = value;
-    };
+    if (languageSelector) {
+      languageSelector.addEventListener('change', () => {
+        setLanguage(languageSelector.value);
+      });
+    }
 
-    text('.language-label', tr.language);
-    text('#headerContact', tr.contact + ' ↗');
-    text('[data-nav="home"]', tr.home);
-    text('[data-nav="catalogue"]', tr.catalogueNav);
-    text('[data-nav="how"]', tr.howNav);
+    const searchInput = getSearchInput();
 
-    const navCart = document.querySelector('.nav-cart');
-    if (navCart) navCart.firstChild.textContent = tr.cartNav + ' ';
+    if (searchInput) {
+      searchInput.addEventListener('input', renderProducts);
+    }
 
-    text('.hero-copy .eyebrow', tr.eyebrow);
+    const categorySelect = getCategorySelect();
 
-    const heading = document.querySelector('.hero-copy h1');
-    if (heading) heading.innerHTML =
-      `${escapeHtml(tr.heroLine1)}<br><em>${escapeHtml(tr.heroLine2)}</em>`;
+    if (categorySelect) {
+      categorySelect.addEventListener('change', renderProducts);
+    }
 
-    text('.hero-text', tr.heroText);
+    const sortSelect = getSortSelect();
 
-    const explore = document.querySelector('.hero-copy .primary-button');
-    if (explore) explore.innerHTML = `${escapeHtml(tr.explore)} <span>↓</span>`;
+    if (sortSelect) {
+      sortSelect.addEventListener('change', renderProducts);
+    }
 
-    const heroNote = document.querySelector('.hero-note');
-    if (heroNote) heroNote.innerHTML =
-      `<span class="dot"></span>${escapeHtml(tr.wholesale)}`;
+    const clearButton = $('clearCart');
 
-    text('.section-head .eyebrow', tr.collection);
-    text('.section-head h2', tr.browse);
-    text('.section-description', tr.sectionDescription);
-
-    searchInput.placeholder = tr.searchPlaceholder;
-    searchInput.setAttribute('aria-label', tr.searchLabel);
-
-    categoryInput.options[0].textContent = tr.allFootwear;
-    categoryInput.options[1].textContent = tr.sandals;
-    categoryInput.options[2].textContent = tr.slippers;
-    categoryInput.options[3].textContent = tr.other;
-
-    sortInput.options[0].textContent = tr.sortCode;
-    sortInput.options[1].textContent = tr.sortName;
-
-    text('#empty h3', tr.noStyles);
-    text('#empty p', tr.noStylesText);
-
-    text('.ordering-guide > .eyebrow', tr.howTitle.toUpperCase());
-    text('.ordering-guide h2', tr.howTitle);
-
-    const guideCards = document.querySelectorAll('.guide-grid article');
-    const guide = [
-      [tr.guide1, tr.guide1Text],
-      [tr.guide2, tr.guide2Text],
-      [tr.guide3, tr.guide3Text],
-      [tr.guide4, tr.guide4Text]
-    ];
-
-    guideCards.forEach((card, index) => {
-      if (!guide[index]) return;
-      const h3 = card.querySelector('h3');
-      const p = card.querySelector('p');
-      if (h3) h3.textContent = guide[index][0];
-      if (p) p.textContent = guide[index][1];
-    });
-
-    text('.cart-heading .eyebrow', tr.yourOrder);
-    text('.cart-heading h2', tr.shoppingCart);
-    text('.cart-intro', tr.cartIntro);
-    text('.cart-summary div:first-child span', tr.totalCartons);
-    text('.cart-summary div:last-child span', tr.totalPairs);
-    text('#clearCart', tr.clearCart);
+    if (clearButton) {
+      clearButton.addEventListener('click', clearCart);
+    }
 
     const checkoutButton = $('checkoutButton');
-    if (checkoutButton) checkoutButton.innerHTML =
-      `${escapeHtml(tr.checkout)} <span>↗</span>`;
 
-    text('.cart-note', tr.cartNote);
-    text('.contact .eyebrow', tr.ready);
-    text('.contact h2', tr.talk);
-    text('.contact div > p:not(.eyebrow)', tr.contactText);
-
-    const whatsappButton = $('whatsappButton');
-    if (whatsappButton) {
-      whatsappButton.innerHTML =
-        `${escapeHtml(tr.whatsapp)} <span>↗</span>`;
-      whatsappButton.href = waNumber
-        ? `https://wa.me/${waNumber}?text=${encodeURIComponent(tr.checkoutIntro)}`
-        : '#contact';
+    if (checkoutButton) {
+      checkoutButton.addEventListener('click', checkoutWhatsApp);
     }
-
-    const footerParagraph = document.querySelector('footer p');
-    if (footerParagraph) {
-      footerParagraph.innerHTML =
-        `© <span id="year">${new Date().getFullYear()}</span> Run First Sandals. ${escapeHtml(tr.rights)}`;
-    }
-
-    const backLink = document.querySelector('footer > a:last-child');
-    if (backLink) backLink.textContent = tr.backToTop + ' ↑';
-
-    $('language').value = currentLanguage;
-    render();
   }
 
-  productRoot.addEventListener('click', event => {
-    const button = event.target.closest('[data-add-cart]');
-    if (button) addToCart(button.dataset.addCart);
-  });
+  // =========================================================
+  // START APPLICATION
+  // =========================================================
 
-  $('cartItems').addEventListener('click', event => {
-    const button = event.target.closest('[data-remove-cart]');
-    if (button) removeFromCart(button.dataset.removeCart);
-  });
+  function init() {
+    currentLanguage = detectLanguage();
 
-  $('cartItems').addEventListener('change', event => {
-    const input = event.target.closest('[data-cart-quantity]');
-    if (input) updateCartQuantity(input.dataset.cartQuantity, input.value);
-  });
-
-  $('clearCart').addEventListener('click', clearCart);
-  $('checkoutButton').addEventListener('click', checkout);
-
-  [searchInput, categoryInput, sortInput].forEach(element => {
-    element.addEventListener('input', render);
-    element.addEventListener('change', render);
-  });
-
-  $('language').addEventListener('change', () => {
-    currentLanguage = $('language').value === 'zh' ? 'zh' : 'en';
-    localStorage.setItem('runFirstLanguage', currentLanguage);
+    setupEventListeners();
     applyLanguage();
-  });
+    renderProducts();
+    renderCart();
+  }
 
-  $('year').textContent = new Date().getFullYear();
-  applyLanguage();
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
 })();
