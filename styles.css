@@ -1383,132 +1383,107 @@ footer > a:last-child {
   }
 }
 
-/* PRODUCT CARD ALIGNMENT — CLEAN FIX */
+
+/* Final product image and card layout fix
+   Preserve source photo proportions at every browser zoom level. */
 .product-grid {
   align-items: stretch;
 }
 
 .product-card {
-  display: flex !important;
-  flex-direction: column !important;
-  height: 100% !important;
-  min-width: 0;
-}
-
-/* Give every product photo area the same height without cropping photos. */
-.product-card > .product-image,
-.product-card .product-image {
   display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  height: 190px !important;
-  min-height: 190px !important;
-  max-height: 190px !important;
-  flex: 0 0 190px !important;
-  overflow: hidden;
-  background: #fff;
-  line-height: normal;
+  flex-direction: column;
+  min-width: 0;
+  height: 100%;
 }
 
-.product-card .product-image img {
+/* The product image may be an IMG itself. Never force a fixed image height. */
+img.product-image {
   display: block;
   width: 100%;
-  height: 100% !important;
-  max-height: 190px !important;
+  height: auto !important;
+  min-height: 0 !important;
+  max-height: none !important;
+  object-fit: contain !important;
+  object-position: center;
+  background: #fff;
+}
+
+/* Also support a wrapper containing the image. */
+.product-image img {
+  display: block;
+  width: 100%;
+  height: auto !important;
+  max-height: none !important;
   object-fit: contain !important;
   object-position: center;
 }
 
-.product-card .image-placeholder {
+div.product-image,
+.product-card > .product-image:not(img) {
   width: 100%;
-  height: 100%;
-  min-height: 0;
+  height: auto !important;
+  min-height: 0 !important;
+  max-height: none !important;
+  flex: 0 0 auto !important;
+  overflow: hidden;
+  line-height: 0;
+  background: #fff;
 }
 
-/* Let product information fill the remaining card height. */
+/* Keep card content flexible without changing photo proportions. */
 .product-info {
-  display: flex !important;
-  flex-direction: column !important;
-  flex: 1 1 auto !important;
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
   min-width: 0;
 }
 
-.product-meta {
-  min-height: 22px;
-}
-
-.product-name {
-  min-height: 18px;
-}
-
-/* Reserve the same area for up to three size options on every card. */
 .size-order-inputs {
-  display: flex !important;
-  flex-direction: column !important;
-  gap: 8px !important;
-  margin-top: auto !important;
-  min-height: 156px !important;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
 }
 
-/* Keep size labels on one line and quantity inputs aligned. */
 .size-order-row {
-  display: grid !important;
-  grid-template-columns: minmax(75px, max-content) minmax(0, 1fr) !important;
-  align-items: center !important;
-  gap: 8px !important;
-  min-height: 44px !important;
-  flex: 0 0 44px !important;
-  padding: 8px 10px !important;
-  box-sizing: border-box !important;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(65px, 76px);
+  align-items: center;
+  gap: 8px;
+  box-sizing: border-box;
 }
 
 .size-order-row label {
-  display: block !important;
-  width: auto !important;
-  min-width: 75px !important;
-  white-space: nowrap !important;
-  overflow-wrap: normal !important;
-  word-break: normal !important;
-  font-size: 11px !important;
-  line-height: 1.2 !important;
+  min-width: 0;
+  white-space: nowrap;
+  overflow-wrap: normal;
+  word-break: normal;
 }
 
 .size-order-row input {
-  width: 100% !important;
-  min-width: 0 !important;
-  box-sizing: border-box !important;
+  width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
 }
 
-/* Place Add to Cart at the same vertical position on each card. */
 .add-cart-button {
-  display: block !important;
-  width: 100% !important;
-  margin-top: 10px !important;
-  flex-shrink: 0;
+  width: 100%;
 }
 
 @media (max-width: 650px) {
-  .product-card > .product-image,
-  .product-card .product-image {
-    height: 150px !important;
-    min-height: 150px !important;
-    max-height: 150px !important;
-    flex-basis: 150px !important;
-  }
-
-  .product-card .product-image img {
-    max-height: 150px !important;
-  }
-
   .size-order-row {
-    grid-template-columns: minmax(65px, max-content) minmax(0, 1fr) !important;
-    gap: 6px !important;
-    padding: 7px !important;
+    grid-template-columns: minmax(0, 1fr) minmax(58px, 76px);
+    gap: 6px;
+  }
+}
+
+@media (max-width: 360px) {
+  .size-order-row {
+    grid-template-columns: minmax(0, 1fr) 60px;
+    gap: 5px;
   }
 
   .size-order-row label {
-    min-width: 65px !important;
-    font-size: 10px !important;
+    font-size: 10px;
   }
 }
