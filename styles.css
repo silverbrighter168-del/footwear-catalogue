@@ -1594,3 +1594,34 @@ footer > a:last-child {
   min-width: 0 !important;
   box-sizing: border-box;
 }
+
+/* FIX SIZE LABELS WRAPPING */
+.product-card-content .size-order-row {
+  display: flex !important;
+  flex-direction: row !important;
+  flex-wrap: nowrap !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+  gap: 8px !important;
+  padding: 8px 10px !important;
+  min-height: 44px !important;
+  box-sizing: border-box !important;
+}
+
+.product-card-content .size-order-label {
+  display: block !important;
+  flex: 0 0 75px !important;
+  width: 75px !important;
+  min-width: 75px !important;
+  white-space: nowrap !important;
+  word-break: keep-all !important;
+  overflow-wrap: normal !important;
+  font-size: 11px !important;
+}
+
+.product-card-content .cart-quantity-input {
+  flex: 1 1 auto !important;
+  width: auto !important;
+  min-width: 0 !important;
+  box-sizing: border-box !important;
+}
